@@ -14,4 +14,6 @@ public interface TodoMapper {
 
 	List<TodoDTO> list(String id);
 
+	int update(TodoDTO params);
+
 }

@@ -26,5 +26,10 @@ public class TodoService {
 	public List<TodoDTO> list(String id) {
 		return mapper.list(id);
 	}
+
+	public boolean update(TodoDTO params) {
+		int row = mapper.update(params);
+		return row>0;
+	}
 	
 }

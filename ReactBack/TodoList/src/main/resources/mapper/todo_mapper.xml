@@ -14,6 +14,11 @@
 		SELECT * FROM todo_list WHERE id = #{param1}
 			ORDER BY idx DESC
 	</select>
+	
+	<update id="update" parameterType="kr.co.himedia.dto.TodoDTO">
+		UPDATE todo_list SET done = #{done} 
+			WHERE idx = #{idx}
+	</update>
 
 </mapper>
 

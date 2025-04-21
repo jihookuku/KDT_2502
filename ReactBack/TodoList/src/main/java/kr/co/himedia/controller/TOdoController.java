@@ -8,7 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.himedia.dto.TodoDTO;
@@ -42,11 +44,22 @@ public class TOdoController {
 		result.put("list", list);		
 		return result;
 	}
-	
-	
-	
-	
+		
 	// update
+	@PutMapping(value="/update")
+	public Map<String, Object> update(@RequestBody TodoDTO params){
+		
+		logger.info("params : "+params.getIdx()+"/"+params.isDone());
+		result = new HashMap<String, Object>();
+		boolean success = service.update(params);
+		result.put("success", success);		
+		return result;
+	}
+	
+	
+	
+	
+	
 	
 	// delete
 
