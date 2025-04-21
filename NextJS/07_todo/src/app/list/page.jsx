@@ -1,7 +1,9 @@
 'use client'
+import Input from "@/app/list/Input";
+
 export default function ListPage(props) {
 
-    let id = ''
+    let id = '';
 
     if(typeof window !== 'undefined') {
         id = sessionStorage.getItem('loginId');
@@ -10,7 +12,7 @@ export default function ListPage(props) {
 
     return (
         <>
-            <h3>INPUT</h3>
+            <Input id={id}/>
             <h3>LIST</h3>
         </>
     );

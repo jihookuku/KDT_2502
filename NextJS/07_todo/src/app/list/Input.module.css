@@ -1,0 +1,29 @@
+.inputBox{
+    width: 80%;
+    height: 40px;
+    font-size: 20px;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid green;
+}
+
+.inputBox:focus{
+    outline: none;
+}
+
+.button{
+    margin-left: 10px;
+    width: 14%;
+    color:green;
+    font-size: 14px;
+    background-color: white;
+    border: 1px solid green;
+    height: 40px;
+    font-weight: bold;
+}
+
+.button:hover{
+    background-color: green;
+    color: white;
+}
