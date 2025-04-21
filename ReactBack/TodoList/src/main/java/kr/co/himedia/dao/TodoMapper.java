@@ -16,4 +16,14 @@ public interface TodoMapper {
 
 	int update(TodoDTO params);
 
+	int del(String idx);
+
 }
+
+
+
+
+
+
+
+

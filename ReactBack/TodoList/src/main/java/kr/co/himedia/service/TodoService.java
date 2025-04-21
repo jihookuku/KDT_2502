@@ -31,5 +31,31 @@ public class TodoService {
 		int row = mapper.update(params);
 		return row>0;
 	}
+
+	public boolean del(Map<String, String> params) {
+		int row = mapper.del(params.get("idx"));
+		return row>0;
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

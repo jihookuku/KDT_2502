@@ -7,9 +7,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,15 +57,42 @@ public class TOdoController {
 		result.put("success", success);		
 		return result;
 	}
-	
-	
-	
-	
-	
-	
+		
 	// delete
+	@DeleteMapping(value="/del")
+	public Map<String, Object> del(@RequestBody Map<String, String> params){
+		
+		logger.info("params : {}",params);
+		result = new HashMap<String, Object>();
+		boolean success = service.del(params);
+		result.put("success", success);		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
