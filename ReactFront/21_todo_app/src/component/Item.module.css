@@ -1,0 +1,20 @@
+.item{
+    padding: 14px;
+    border-bottom: 1px solid lightgray;
+}
+
+.text{
+    display:inline;
+    font-size: 20px;
+}
+
+.delete{
+    float:right;
+    color:red;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.done{
+    text-decoration: line-through;
+}

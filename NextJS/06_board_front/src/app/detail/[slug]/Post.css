@@ -1,0 +1,30 @@
+.header{
+    background-color: lightgray;
+    height: 30px;
+    padding: 5px;
+}
+
+.header div:first-child{
+    padding: 5px;
+    float: left;
+}
+
+.header div:nth-child(2){
+    padding: 5px;
+    float: right;
+    font-weight: 600;
+    color: orangered;
+}
+
+.title{
+    padding: 5px;
+    font-weight: bold;
+}
+
+.btn_area{
+    text-align: center;
+}
+
+button{
+    margin: 10px;
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="kr.co.himedia.dao.MemberDAO">
+	<insert id="join" parameterType="map">
+		INSERT INTO
+		member(id,pw,name,age,gender,email)VALUES(#{id},#{pw},#{name},#{age},#{gender},#{email})
+	</insert>
+	
+	<select id="login" resultType="String">
+		SELECT id FROM member WHERE id = #{param1} and pw = #{param2}
+	</select>
+	
+	<select id="list" resultType="kr.co.himedia.dto.MemberDTO">
+		SELECT id,name,email FROM member
+	</select>
+	
+	<delete id="del">
+		DELETE FROM member WHERE id = #{param1}
+	</delete>
+	
+	<select id="detail" resultType="kr.co.himedia.dto.MemberDTO">
+		SELECT * FROM member WHERE id = #{param1}
+	</select>
+	
+	<update id="update" parameterType="map">
+		UPDATE member SET 
+			pw = #{pw}
+			,name = #{name}
+			,age= #{age}
+			,gender = #{gender}
+			,email= #{email}
+		WHERE id =  #{id}
+	</update>
+	
+	<select id="overlay">
+	SELECT COUNT(id) FROM member 
+		WHERE id = #{param1}
+	</select>
+	
+	
+	
+	
+	
+</mapper>

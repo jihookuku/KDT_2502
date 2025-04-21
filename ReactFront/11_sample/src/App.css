@@ -1,0 +1,23 @@
+.item div{
+  display: inline;
+}
+.item{
+  width: 80%;
+  height: 30px;
+  border: 1px solid lightgray;
+  margin-top: 5px;
+  padding: 10px 0 0 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.cnt{
+  float: right;
+  width: 20px;
+  height: 20px;
+  border: 1px solid lightgray;
+  margin-right: 10px;
+  text-align: center;
+  color: orange;
+  font-weight: 600;
+}

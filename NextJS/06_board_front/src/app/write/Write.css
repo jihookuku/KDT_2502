@@ -1,0 +1,36 @@
+.write{
+    width: 500px;
+}
+
+input[type="text"]{
+    width: 99%;
+}
+
+textarea{
+    width: 99%;
+    height: 300px;
+    resize: none;
+}
+
+.header{
+    background-color: lightgray;
+    height: 30px;
+    padding: 5px;
+}
+
+.header div{
+    padding: 5px;
+}
+
+.title{
+    padding: 5px;
+    font-weight: bold;
+}
+
+.btn_area{
+    text-align: center;
+}
+
+button{
+    margin: 10px;
+}

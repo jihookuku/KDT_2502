@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+table, th, td{
+	border : 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td{
+	padding: 5px;
+}
+
+textarea{
+	width:100%;
+	height: 150px;
+	resize: none;
+}
+
+table{
+	width: 500px;
+}
+
+input[type='text']{
+	width:100%;
+}

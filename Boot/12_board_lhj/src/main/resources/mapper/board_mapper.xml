@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="kr.co.himedia.dao.BoardDAO">
+	<select id="list" resultType="kr.co.himedia.dto.BoardDTO">
+		select idx,subject,user_name,bHit,reg_date from bbs order by idx desc
+	</select>
+	
+	<!-- 
+		조건 2. 방금 넣은 값의 키를 가져오는 설정 추가
+		useGeneratedKeys="true" : 생성된 키를 가져오겠다는 옵션
+		keyColumn="idx"				: 키의 컬럼 이름?
+		keyProperty="idx"			: DTO 의 어떤 변수에 넣을지?
+	 -->
+	<insert id="write"
+		useGeneratedKeys="true"
+		keyColumn="idx"
+		keyProperty="idx"
+		parameterType="kr.co.himedia.dto.BoardDTO"
+	>
+		insert into bbs(subject,user_name,content)
+			values(#{subject},#{user_name},#{content})
+	</insert>
+	
+	<update id="bHit">
+		update bbs set bHit = bHit+1 where idx = #{param1}
+	</update>
+	
+	<select id="detail" resultType="kr.co.himedia.dto.BoardDTO">
+		select * from bbs where idx = #{param1}
+	</select>
+	
+	<delete id="del">
+		delete from bbs where idx = #{param1}
+	</delete>
+	
+	<update id="update" parameterType="map">
+		update bbs set user_name = #{user_name}, subject = #{subject}, content = #{content} where idx = #{idx}
+	</update>
+	
+	<insert id="fileSave">
+		INSERT INTO photo(ori_filename,new_filename,idx)
+			VALUES(#{param1},#{param2},#{param3})
+	</insert>
+	
+	<select id="photos" resultType="kr.co.himedia.dto.PhotoDTO">
+		SELECT file_idx, new_filename FROM photo
+			WHERE idx = #{param1}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

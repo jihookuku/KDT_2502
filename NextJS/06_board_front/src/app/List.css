@@ -1,0 +1,36 @@
+.post{
+    width:50%;
+    border: 1px solid lightgray;
+    padding: 10px 0 0 10px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.post:hover{
+    background-color: lightgray;
+}
+
+.title{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+a{
+    text-decoration: none;
+    color:orangered;
+}
+
+.more{
+    width:50%;
+    border: 1px solid lightgray;
+    padding: 10px 0 10px 10px;
+    margin-top: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.more:hover{
+    background-color: lightgray;
+}

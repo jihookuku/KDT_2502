@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.himedia.dao.BoardDAO">
+
+	<select id="list" resultType="kr.co.himedia.dto.BoardDTO">
+		SELECT
+			idx,subject,user_name,bHit,reg_date FROM bbs 
+		ORDER BY idx desc
+	</select>
+
+	<insert id="write">
+		INSERT INTO bbs(subject,user_name,content)
+		VALUES(#{param1},#{param2},#{param3})
+	</insert>
+
+	<select id="detail" resultType="kr.co.himedia.dto.BoardDTO">
+		SELECT * FROM bbs WHERE idx = #{patam1}
+	</select>
+
+	<update id="upHit" parameterType="String">
+		UPDATE bbs SET bHit = bHit+1 WHERE idx = #{idx}
+	</update>
+
+	<delete id="del">
+		DELETE FROM bbs WHERE idx = #{param1}
+	</delete>
+	
+	<update id="update" parameterType="map">
+		UPDATE bbs SET
+			user_name = #{user_name}
+			,content = #{content}
+			,subject=#{subject}
+		WHERE idx = #{idx}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

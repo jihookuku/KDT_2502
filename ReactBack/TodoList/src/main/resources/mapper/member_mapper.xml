@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="kr.co.himedia.dao.MemberMapper">
+
+	<select id="overlay" resultType="int">
+		SELECT COUNT(id) FROM member 
+			WHERE id = #{param1}	
+	</select>
+	
+	<insert id="join" parameterType="map">
+		INSERT INTO member(id,pw,name,age,gender,email)
+			VALUES(#{id},#{pw},#{name},#{age},#{gender},#{email})
+	</insert>
+	
+	<select id="login" parameterType="map" resultType="int">
+		SELECT COUNT(id) FROM member 
+			WHERE id = #{id} AND pw = #{pw}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+

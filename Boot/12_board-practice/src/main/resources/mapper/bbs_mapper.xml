@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.himedia.dao.BoardDAO">
+	<select id="list" resultType="kr.co.himedia.dto.BoardDTO">
+		SELECT 
+			b.idx
+			,b.subject
+			,b.user_name
+			,b.bHit
+			,b.reg_date 
+			,(SELECT COUNT(file_idx) FROM photo WHERE idx = b.idx)AS cnt
+		FROM bbs b ORDER BY b.idx DESC
+	</select>
+	
+	<insert 
+		useGeneratedKeys="true"
+		keyColumn="idx"
+		keyProperty="idx"
+		id="write" parameterType="kr.co.himedia.dto.BoardDTO">
+		INSERT INTO bbs(subject,user_name,content)
+			VALUES(#{subject}, #{user_name}, #{content})
+	</insert>
+
+	<insert id="fileSave">
+	INSERT INTO photo(ori_filename,new_filename,idx)
+		VALUES(#{param1},#{param2},#{param3})
+	</insert>
+	
+	<select id="detail" resultType="kr.co.himedia.dto.BoardDTO">
+		SELECT * FROM bbs WHERE idx = #{param1}
+	</select>
+	
+	<update id="uphit" parameterType="String">
+		UPDATE bbs set bhit = bhit+1 WHERE idx = ${idx}
+	</update>
+	
+	<delete id="del">
+		DELETE FROM bbs WHERE IDX = #{param1}
+	</delete>
+	
+	<update id="update" parameterType="map">
+		UPDATE bbs set subject = #{subject}, content = #{content} WHERE idx =#{idx}
+	</update>
+	
+	<select id="photos" resultType="kr.co.himedia.dto.PhotoDTO">
+		SELECT ori_filename, new_filename, file_idx
+			FROM photo WHERE idx = #{param1}	
+	</select>
+	
+	<select id="getFileName" resultType="String">
+		SELECT new_filename FROM photo WHERE idx = #{param1}
+	</select>
+	
+	<delete id="delFiles">
+		DELETE FROM photo WHERE idx = #{param1}
+	</delete>
+	
+	<select id="download" resultType="kr.co.himedia.dto.PhotoDTO">
+	SELECT new_filename, ori_filename 
+		FROM photo WHERE file_idx =#{param1}	
+	</select>
+		
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

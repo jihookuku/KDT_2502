@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="kr.co.himedia.dao.BoardDAO">
+
+	<select id="pages" resultType="int">
+		SELECT CEIL(COUNT(idx)/5) AS pages FROM bbs
+	</select>
+	
+	<select id="list" resultType="kr.co.himedia.dto.BoardDTO">
+		SELECT idx, subject, bHit, user_name FROM bbs 
+			ORDER BY idx DESC
+				LIMIT 5 OFFSET #{param1}
+	</select>
+	
+	<select id="detail" resultType="kr.co.himedia.dto.BoardDTO">
+		SELECT * FROM bbs WHERE idx = #{param1}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM bbs WHERE idx = #{param1}
+	</delete>
+	
+	<insert id="write" 
+		useGeneratedKeys="true"
+		keyColumn="idx"
+		keyProperty="idx"
+		parameterType="kr.co.himedia.dto.BoardDTO">
+		INSERT INTO bbs(user_name,subject,content)
+			VALUES(#{user_name},#{subject},#{content})
+	</insert>
+	
+	<!-- 페이지네이션 -->
+	<select id="total" resultType="int">
+		SELECT COUNT(idx) AS cnt FROM bbs
+	</select>
+
+</mapper>
+
+
+
+
+
+
+

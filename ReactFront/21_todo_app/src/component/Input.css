@@ -1,0 +1,27 @@
+input[type="text"]{
+    height: 40px;
+    width: 83%;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    border-bottom: 1px solid green;
+}
+
+input:focus{
+    outline: none;
+}
+
+button{
+    height: 40px;
+    width:14%;
+    color : green;
+    background-color: white;
+    border: 1px solid green;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+button:hover{
+    background-color: green;
+    color: white;
+}

@@ -1,0 +1,10 @@
+span{
+    color: dodgerblue;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.App-title{
+    background-color: yellowgreen;
+    color: white;
+}

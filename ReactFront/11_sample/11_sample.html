@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    .item div{
+      display: inline;
+    }
+    .item{
+      width: 80%;
+      height: 30px;
+      border: 1px solid lightgray;
+      margin-top: 5px;
+      padding: 10px 0 0 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .cnt{
+      float: right;
+      width: 20px;
+      height: 20px;
+      border: 1px solid lightgray;
+      margin-right: 10px;
+      text-align: center;
+      color: orange;
+      font-weight: 600;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="item">
+      <div>A 아이템 구매 수</div>
+      <div class="cnt">0</div>
+  </div>
+  <div class="item">
+    <div>B 아이템 구매 수</div>
+    <div class="cnt">0</div>
+  </div>
+  <div class="item">
+    <div>C 아이템 구매 수</div>
+    <div class="cnt">0</div>
+  </div>
+</body>
+<script>
+  var items = document.querySelectorAll('.item');
+  console.log(items);
+  for (let item of items) {
+    item.addEventListener('click',callItem);
+  }
+  function callItem(e){
+    var cnt = e.target.querySelector('.cnt');
+    var num = parseInt(cnt.innerHTML);
+    num++;
+    cnt.innerHTML = num;
+    //console.log(num);
+  }
+</script>
+</html>
