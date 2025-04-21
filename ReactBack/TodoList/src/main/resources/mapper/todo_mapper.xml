@@ -9,6 +9,11 @@
 		INSERT INTO todo_list(id,content,done)
 			VALUES(#{id},#{content},${done})
 	</insert>
+	
+	<select id="list" resultType="kr.co.himedia.dto.TodoDTO">
+		SELECT * FROM todo_list WHERE id = #{param1}
+			ORDER BY idx DESC
+	</select>
 
 </mapper>
 
