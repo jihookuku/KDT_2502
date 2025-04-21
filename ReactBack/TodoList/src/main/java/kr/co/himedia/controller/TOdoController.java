@@ -31,9 +31,18 @@ public class TOdoController {
 	@PostMapping(value="/insert")
 	public Map<String, Object> insert(@RequestBody Map<String, String> params){
 		logger.info("params : {}",params);
-		boolean success = service.insert(params);
 		result = new HashMap<String, Object>();
-		result.put("success", success);		
+		boolean login = false;
+		
+		String loginId = params.get("id");
+		if(loginId != null && !loginId.equals("")) {			
+			boolean success = service.insert(params);		
+			result.put("success", success);
+			login = true;
+		}
+		
+		result.put("loginYN", login);
+		
 		return result;
 	}
 	
@@ -42,8 +51,17 @@ public class TOdoController {
 	public Map<String, Object> list(@RequestBody Map<String, String> params){
 		logger.info("params : {} ",params);
 		result = new HashMap<String, Object>();
-		List<TodoDTO> list =service.list(params.get("id"));
-		result.put("list", list);		
+		boolean login = false;
+		String loginId = params.get("id");
+		
+		if(loginId != null && !loginId.equals("")) {
+			List<TodoDTO> list =service.list(params.get("id"));
+			result.put("list", list);		
+			login = true;
+		}
+		
+		result.put("loginYN", login);
+		
 		return result;
 	}
 		
@@ -53,8 +71,17 @@ public class TOdoController {
 		
 		logger.info("params : "+params.getIdx()+"/"+params.isDone());
 		result = new HashMap<String, Object>();
-		boolean success = service.update(params);
-		result.put("success", success);		
+		boolean login = false;
+		String loginId = params.getId();
+		
+		if(loginId != null && !loginId.equals("")) {
+			boolean success = service.update(params);
+			result.put("success", success);		
+			login = true;
+		}
+		
+		result.put("loginYN", login);
+		
 		return result;
 	}
 		
@@ -64,8 +91,16 @@ public class TOdoController {
 		
 		logger.info("params : {}",params);
 		result = new HashMap<String, Object>();
-		boolean success = service.del(params);
-		result.put("success", success);		
+		boolean login = false;
+		String loginId = params.get("id");
+		
+		if(loginId != null && !loginId.equals("")) {
+			boolean success = service.del(params);
+			result.put("success", success);		
+			login = true;
+		}
+		result.put("loginYN", login);
+		
 		return result;
 	}
 	
