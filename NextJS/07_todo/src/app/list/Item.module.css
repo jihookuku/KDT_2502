@@ -1,0 +1,26 @@
+.item {
+    padding: 14px;
+    border-bottom: 1px solid lightgray;
+}
+
+.checkbox{
+    width: 20px;
+    height: 20px;
+}
+
+.text{
+    display: inline;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+.done{
+    text-decoration: line-through;
+}
+
+.delete{
+    float: right;
+    color: orange;
+    font-weight: bold;
+    cursor: pointer;
+}

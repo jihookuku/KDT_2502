@@ -2,6 +2,7 @@
 import Input from "@/app/list/Input";
 import {useEffect, useRef, useState} from "react";
 import axios from "axios";
+import List from "@/app/list/List";
 
 export default function ListPage(props) {
 
@@ -11,7 +12,6 @@ export default function ListPage(props) {
     useEffect(() => {
         if(typeof window !== 'undefined') {
             id.current = sessionStorage.getItem('loginId');
-
         }
         getList(id.current);
     },[]);
@@ -30,7 +30,7 @@ export default function ListPage(props) {
     return (
         <>
             <Input id={id.current} getList={getList}/>
-            <h3>LIST</h3>
+            <List id={id.current} list={list}/>
         </>
     );
 }
