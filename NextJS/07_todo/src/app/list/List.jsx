@@ -2,15 +2,10 @@ import ItemStyle from "./Item.module.css";
 import {useState} from "react";
 import axios from "axios";
 export default function List({list, getList}){
-    //console.log(list);
-    let listItem = (<div className={ItemStyle.item}>
-        등록된 아이템이 없습니다.</div>);
-
-     listItem = list.map((item)=>{
-        return <Item key={item.idx} getList={getList}>
-               {item}
-        </Item>
-    });
+    console.log(list);
+    let listItem = list.length == 0 ?
+        (<div className={ItemStyle.item}> 등록된 아이템이 없습니다.</div>)
+        : list.map(item => <Item key={item.idx} getList={getList}>{item}</Item>);
 
     return (
         <>{listItem}</>
@@ -37,6 +32,17 @@ function Item({children, getList}){
         });
     }
 
+    const del=(id, idx)=>{
+        let param = {"id":id, "idx":idx};
+        console.log('param',param);
+        axios.delete('http://localhost/del', {data:param}).then(({data})=>{
+            console.log(data);
+            getList(id);
+        });
+
+
+    }
+
     return(
         <div className={ItemStyle.item}>
             <input className={ItemStyle.checkbox}
@@ -44,7 +50,8 @@ function Item({children, getList}){
             <div className={`${ItemStyle.text}  ${chk ? ItemStyle.done : ''}`}>
                 {children.content}
             </div>
-            <div className={ItemStyle.delete}>[삭제]</div>
+            <div className={ItemStyle.delete}
+                 onClick={()=>{del(children.id, children.idx)}}>[삭제]</div>
         </div>
     );
 }
