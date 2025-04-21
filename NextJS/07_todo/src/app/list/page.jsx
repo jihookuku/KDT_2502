@@ -30,7 +30,7 @@ export default function ListPage(props) {
     return (
         <>
             <Input id={id.current} getList={getList}/>
-            <List id={id.current} list={list}/>
+            <List list={list} getList={getList}/>
         </>
     );
 }
