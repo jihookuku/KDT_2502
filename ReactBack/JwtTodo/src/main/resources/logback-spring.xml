@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- logback-spring.xml 을 통해 상세한 설정이 가능하다. -->
+<!-- 60초마다 설정 파일의 변경을 확인 하여 변경시 갱신 -->
+<configuration scan="true" scanPeriod="60 seconds">
+
+	<!-- 패턴 등록 -->
+	<!-- INFO  24-05-27 12:09:05[http-nio-8080-exec-2] [BoardController:28] - list 요청 -->
+	<!-- 
+	%-5 : 좌측정렬 5자(5자가 안되면 나머지는 공백처리)
+	level : 로그레벨 
+	%d : 로그의 기록 시간
+	{yy-MM-dd HH:mm:ss} : 기록패턴
+	[%thread] :프로그램을 실행시키고 있는 스레드
+	[%logger{0}: 로거의 소스 단계(수정가능)
+	%line] : 로그가 찍힌 소스의 라인수
+	 - %msg : 메시지
+	%n : 개행(줄바꿈)	
+	%C : 해당 클래스의 풀 경로
+	%M : 실행한 메서드명
+	 -->
+	<property name="LOG_PATTERN" value="%-5level %d{yy-MM-dd HH:mm:ss} [%thread]  [%logger{0}:%line] - %msg%n"/>
+
+	<!-- Appenders :  CONSOLE -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">	
+		<!-- 출력 패턴 -->
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${LOG_PATTERN}</pattern> 		
+		</encoder>
+	</appender>	
+		
+	<!-- SQL LOG 옵션 설정 (쿼리문과 걸린시간, 결과를 보도록 한다.)-->	
+	<!-- 커넥션의 연결과 종료를 로그에 남김 -->
+	<logger name="jdbc.connection" level="OFF"/>
+	<!-- 실행되는 쿼리문을 로그로 남김 -->
+	<logger name="jdbc.sqlonly" level="OFF"/>
+	<!-- 쿼리문 + 걸린 시간 -->
+	<logger name="jdbc.sqltiming" level="INFO"/>
+	<!-- 쿼리를 수행하기 까지의 상세한 내용 하나하나 다 남김(로그가 많이 길어진다.) -->
+	<logger name="jdbc.audit" level="OFF"/>
+	<!-- select 수행시 결과인 resultSet 을 보여준다. -->
+	<logger name="jdbc.resultset" level="OFF"/>
+	<!-- 결과값을 테이블(표) 형식으로 보여준다. -->
+	<logger name="jdbc.resultsettable" level="INFO"/>	
+
+   	<!-- Root Logger -->
+   	<!-- TRACE > DEBUG > INFO > WARN > FATAL -->
+	<root level="INFO">
+		<appender-ref ref="console"/>
+	</root>
+    
+</configuration>
