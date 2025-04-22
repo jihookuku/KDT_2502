@@ -9,8 +9,12 @@ import javax.crypto.SecretKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -47,5 +51,54 @@ public class TokenController {
 		
 		return token;
 	}
+	
+	/* POST http://localhost:8080/read_token
+	 * Content-Type: application/json
+	 * authorization : {토큰값}
+	 * 
+	 * {바디내용}
+	 */
+	@PostMapping(value="/read_token")
+	public Map<String, Object>readToken(@RequestHeader Map<String, String> header){
+		
+		logger.info("header : {}",header);
+		// 보안과 관련된 토큰은 일반적으로 헤더를 통해 주고 받는다.
+		String token = header.get("authorization");
+		
+		// 받아온 토큰을 비밀키를 이용해 파싱하는 과정
+		Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(pri_key).build().parseClaimsJws(token);
+		
+		// 원하는 payload 정보를 꺼내오기
+		String id = claims.getBody().get("id", String.class);
+		String name = (String) claims.getBody().get("name");
+		String role = claims.getBody().get("role",String.class);
+		Date expTime = claims.getBody().getExpiration();
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("id", id);
+		result.put("name", name);
+		result.put("role", role);
+		result.put("expTime", expTime);		
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
