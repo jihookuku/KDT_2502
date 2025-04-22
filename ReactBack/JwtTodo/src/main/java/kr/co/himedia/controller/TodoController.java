@@ -29,9 +29,21 @@ public class TodoController {
 	public Map<String, Object> insert(@RequestBody Map<String, String> params,
 			@RequestHeader Map<String, String> header){
 		logger.info("params : "+params);
+		logger.info("header : {}",header);		
 		result = new HashMap<String, Object>();
-		boolean success = service.insert(params);
-		result.put("success", success);
+		boolean login = false;
+		String token = header.get("authorization");
+		
+		Map<String, Object> payload = JwtUtils.readToken(token);
+		String loginId = (String) payload.get("id");
+		
+		if(loginId != null && loginId.equals(params.get("id"))) {
+			boolean success = service.insert(params);
+			result.put("success", success);
+			login = true;
+		}
+		result.put("loginYN", login);
+
 		return result;
 	}
 	
@@ -61,10 +73,22 @@ public class TodoController {
 	@PutMapping(value="/update")
 	public Map<String, Object> update(@RequestBody TodoDTO dto,
 			@RequestHeader Map<String, String> header){
-		logger.info("params : "+dto.getIdx()+"/"+dto.isDone());
+		logger.info("params : "+dto.getIdx()+"/"+dto.isDone());		
+		logger.info("header : {}",header);		
 		result = new HashMap<String, Object>();
-		boolean success = service.update(dto);
-		result.put("success", success);
+		boolean login = false;
+		String token = header.get("authorization");
+		
+		Map<String, Object> payload = JwtUtils.readToken(token);
+		String loginId = (String) payload.get("id");
+		
+		if(loginId != null && dto.getId().equals(loginId)) {
+			boolean success = service.update(dto);
+			result.put("success", success);
+			login = true;
+		}
+		result.put("loginYN", login);
+		
 		return result;
 	}
 	
@@ -72,10 +96,36 @@ public class TodoController {
 	public Map<String, Object> del(@RequestBody Map<String, String> params,
 			@RequestHeader Map<String, String> header){
 		logger.info("params : "+params);
+		logger.info("header : {}",header);		
 		result = new HashMap<String, Object>();
-		boolean success = service.del(params);
-		result.put("success", success);
+		boolean login = false;
+		String token = header.get("authorization");
+		
+		Map<String, Object> payload = JwtUtils.readToken(token);
+		String loginId = (String) payload.get("id");
+		
+		if(loginId != null && loginId.equals(params.get("id"))) {
+			boolean success = service.del(params);
+			result.put("success", success);			
+			login = true;
+		}
+		
+		result.put("loginYN", login);		
+
 		return result;
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
