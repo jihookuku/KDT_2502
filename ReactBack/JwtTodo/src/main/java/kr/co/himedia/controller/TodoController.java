@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.himedia.dto.TodoDTO;
 import kr.co.himedia.service.TodoService;
+import kr.co.himedia.utils.JwtUtils;
 
 @RestController
 public class TodoController {
@@ -24,7 +26,8 @@ public class TodoController {
 	@Autowired TodoService service;
 	
 	@PostMapping(value="/insert")
-	public Map<String, Object> insert(@RequestBody Map<String, String> params){
+	public Map<String, Object> insert(@RequestBody Map<String, String> params,
+			@RequestHeader Map<String, String> header){
 		logger.info("params : "+params);
 		result = new HashMap<String, Object>();
 		boolean success = service.insert(params);
@@ -33,16 +36,31 @@ public class TodoController {
 	}
 	
 	@PostMapping(value="/list")
-	public Map<String, Object> list(@RequestBody Map<String, String> params){
+	public Map<String, Object> list(@RequestBody Map<String, String> params,
+			@RequestHeader Map<String, String> header){
 		logger.info("params : "+params);
+		logger.info("header : {}",header);
+		
+		String token = header.get("authorization");
+		Map<String, Object> payload = JwtUtils.readToken(token);
+		String loginId = (String) payload.get("id");
+		boolean login = false;		
 		result = new HashMap<String, Object>();
-		List<TodoDTO> list =service.list(params.get("id"));
-		result.put("list", list);
+		
+		if(loginId != null && loginId.equals(params.get("id"))) {
+			List<TodoDTO> list =service.list(params.get("id"));
+			result.put("list", list);
+			login = true;
+		}
+		
+		result.put("loginYN", login);
+				
 		return result;
 	}
 	
 	@PutMapping(value="/update")
-	public Map<String, Object> update(@RequestBody TodoDTO dto){
+	public Map<String, Object> update(@RequestBody TodoDTO dto,
+			@RequestHeader Map<String, String> header){
 		logger.info("params : "+dto.getIdx()+"/"+dto.isDone());
 		result = new HashMap<String, Object>();
 		boolean success = service.update(dto);
@@ -51,7 +69,8 @@ public class TodoController {
 	}
 	
 	@DeleteMapping(value="/del")
-	public Map<String, Object> del(@RequestBody Map<String, String> params){
+	public Map<String, Object> del(@RequestBody Map<String, String> params,
+			@RequestHeader Map<String, String> header){
 		logger.info("params : "+params);
 		result = new HashMap<String, Object>();
 		boolean success = service.del(params);
