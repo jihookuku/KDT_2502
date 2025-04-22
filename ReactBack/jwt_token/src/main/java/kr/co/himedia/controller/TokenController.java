@@ -33,11 +33,11 @@ public class TokenController {
 		payload.put("role", "ADMIN");
 		
 		//서명할 키
-		pri_key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+		pri_key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 		
 		// header.payload.Signature
 		String token = Jwts.builder()
-				.setHeaderParam("alg", "HS512") 	// 사용 알고리즘
+				.setHeaderParam("alg", "HS256") 	// 사용 알고리즘
 				.setHeaderParam("typ", "JWT")		//토큰종류
 				.setClaims(payload)		// 내용
 				.setIssuedAt(new Date())	// 발급일자
