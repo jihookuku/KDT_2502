@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.himedia.service.MemberService;
+import kr.co.himedia.utils.JwtUtils;
 
 @RestController
 public class MemberController {
@@ -51,8 +52,16 @@ public class MemberController {
 	public Map<String, Object> login(@RequestBody Map<String, String> params){
 		logger.info("params : "+params);
 		result = new HashMap<String, Object>();
+		
 		boolean success = service.login(params);
+		if(success) {
+			String token = JwtUtils.getToken("id", params.get("id"));
+			result.put("token", token);
+		}
 		result.put("success", success);
+		
+		
+		
 		return result;
 	}
 	
