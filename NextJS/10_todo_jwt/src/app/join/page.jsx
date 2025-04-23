@@ -29,6 +29,20 @@ export default function JoinPage(){
         }
     }
 
+    const join=async()=>{
+        if(chk.current){
+            let{data} = await axios.post('http://localhost/join/',info);
+            if(data.success){
+                alert('회원가입에 성공 했습니다.');
+                location.href='/';
+            }else{
+                alert('회원가입에 실패 했습니다.');
+            }
+        }else{
+            alert('중복체크를 수행해 주세요!');
+        }
+    }
+
     return(
         <>
             <h3>회원가입</h3>
@@ -37,27 +51,26 @@ export default function JoinPage(){
                     <tr>
                         <th>ID</th>
                         <td>
-                            <input type="text" name="id" onChange={input}/>
+                            <input type="text" name="id" onChange={input} value={info.id}/>
                             <button type="button" id="overlay" onClick={overlay}>중복체크</button>
-                            <p id="result"></p>
                         </td>
                     </tr>
                     <tr>
                         <th>PW</th>
                         <td>
-                            <input type="text" name="pw" onChange={input}/>
+                            <input type="text" name="pw" onChange={input} value={info.pw}/>
                         </td>
                     </tr>
                     <tr>
                         <th>NAME</th>
                         <td>
-                            <input type="text" name="name" onChange={input}/>
+                            <input type="text" name="name" onChange={input} value={info.name}/>
                         </td>
                     </tr>
                     <tr>
                         <th>AGE</th>
                         <td>
-                            <input type="text" name="age" onChange={input}/>
+                            <input type="text" name="age" onChange={input} value={info.age}/>
                         </td>
                     </tr>
                     <tr>
@@ -71,12 +84,12 @@ export default function JoinPage(){
                     <tr>
                         <th>EMAIL</th>
                         <td>
-                            <input type="text" name="email" onChange={input}/>
+                            <input type="text" name="email" onChange={input} value={info.email}/>
                         </td>
                     </tr>
                     <tr>
                         <th colSpan="2">
-                            <input type="button" value="회원가입"/>
+                            <input type="button" value="회원가입" onClick={join}/>
                         </th>
                     </tr>
                 </tbody>
