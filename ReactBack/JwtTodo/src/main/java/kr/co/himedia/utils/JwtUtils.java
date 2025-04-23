@@ -47,13 +47,18 @@ public class JwtUtils {
 	public static Map<String, Object> readToken(String token){		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		Claims claims = Jwts.parserBuilder().setSigningKey(pri_key).build()
-			.parseClaimsJws(token).getBody();
-		
-		for (String key : claims.keySet()) {
-			result.put(key, claims.get(key));
-		}
+		try {
+			Claims claims = Jwts.parserBuilder().setSigningKey(pri_key).build()
+					.parseClaimsJws(token).getBody();
 				
+			for (String key : claims.keySet()) {
+				result.put(key, claims.get(key));
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("id", ""); // token 에 문제 발생시 "id" 를 "" 로 반환
+		}
+						
 		return result;		
 	}
 	
