@@ -5,11 +5,26 @@
 import "./member.css"
 import Link from "next/link";
 import axios from "axios";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function LoginPage(){
 
     const [info, setInfo] = useState({id:'',pw:''});
+
+    useEffect(()=>{
+            const loginId = sessionStorage.getItem("loginId");
+            const token = sessionStorage.getItem("token");
+            if(loginId != null){
+                sessionStorage.removeItem("loginId");
+            }
+            if(token != null){
+                sessionStorage.removeItem("token");
+            }
+            console.log("loginId : ",loginId);
+            console.log("token : ",token);
+    },[]);
+
+
 
     const input=(e) => {
         let {name, value} = e.target;

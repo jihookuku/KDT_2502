@@ -15,8 +15,6 @@ export default function Item({item,getList, loginChk}){
                 console.log(data);
                 loginChk(data.loginYN);
             });
-
-
     }
 
     // 400 해결
