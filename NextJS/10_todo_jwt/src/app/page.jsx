@@ -21,6 +21,7 @@ export default function LoginPage(){
         if(data.success){
             alert('로그인에 성공 했습니다.');
             sessionStorage.setItem('token',data.token);
+            sessionStorage.setItem('loginId',info.id);
             location.href='/list';
         }else{
             alert('아이디 또는 비밀번호를 확인하세요!');
