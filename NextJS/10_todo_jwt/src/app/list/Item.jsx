@@ -1,7 +1,7 @@
 import {useRef, useState} from "react";
 import axios from "axios";
 
-export default function Item({item,getList}){
+export default function Item({item,getList, loginChk}){
 
     const [chk, setChk] = useState(item.done);
     console.log(item.id);
@@ -11,7 +11,12 @@ export default function Item({item,getList}){
         setChk(!chk);
         console.log(token.current);
         axios.put('http://localhost/update',{"id":item.id,"done":!chk,"idx":item.idx},
-            {headers:{authorization: token.current}}).then(({data})=> console.log(data));
+            {headers:{authorization: token.current}}).then(({data})=> {
+                console.log(data);
+                loginChk(data.loginYN);
+            });
+
+
     }
 
     // 400 해결
@@ -24,6 +29,7 @@ export default function Item({item,getList}){
         axios.delete('http://localhost/del',{data:{"id":item.id,"idx":item.idx}
             ,headers:{authorization: token.current}}).then(({data})=>{
                 console.log(data);
+                loginChk(data.loginYN);
                 getList();
         });
 

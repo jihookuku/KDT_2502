@@ -1,7 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 
-export default function Input(props) {
+export default function Input({loginChk}) {
     const [todo, setTodo] = useState('');
     const insert=async ()=>{
         let{data} = await axios.post('http://localhost/insert',
@@ -9,10 +9,7 @@ export default function Input(props) {
             {headers: {'authorization': sessionStorage.getItem('token')}}
        );
         console.log(data);
-        if(!data.loginYN){
-            alert('로그인이 필요한 서비스 입니다.');
-            location.href='/';
-        }
+        loginChk(data.loginYN);
     }
 
     return (
