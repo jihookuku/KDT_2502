@@ -3,6 +3,7 @@ import Input from "@/app/list/Input";
 import "./todo.css";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import List from "@/app/list/List";
 
 export default function TodoPage(){
 
@@ -17,14 +18,14 @@ export default function TodoPage(){
         const loginId = sessionStorage.getItem("loginId");
         const {data} = await axios.post('http://localhost/list',{"id":loginId}, {headers:{authorization: token}})
         console.log(data);
-        setList([...list,data.list]);
+        setList(data.list);
     }
 
     return(
         <>
             <h3>해야 할 일</h3>
             <Input />
-            <div>LIST</div>
+            <List list={list} getList={getList}/>
         </>
     );
 }
