@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/css/ui.jqgrid.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <!-- 스크립트 삽입 -->
+  <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/i18n/grid.locale-en.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/jquery.jqGrid.min.js"></script>
+
+
+<title>CFS파일 업로드</title>
+
+  <style>
+    .bitMask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    .bitPopup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      z-index: 1000;
+      display: none;
+      width: 90%;
+      max-width: 1000px;
+      height: 600px;
+      overflow: auto;
+    }
+
+    .btn-area {
+      margin-bottom: 10px;
+      text-align: right;
+    }
+
+		.popup-header {
+			padding: 10px 0;
+		}
+
+		.popup-header .title {
+			font-size: 20px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+    .popup-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4d4f;
+      color: white;
+      border: none;
+      font-size: 28px;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      line-height: 36px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: background 0.2s ease;
+    }
+
+    .popup-close-btn:hover {
+      background: #d9363e;
+    }
+
+		.popup-content {
+			display: flex;
+			gap: 20px;
+			overflow-x: auto;
+			max-height: 450px;
+			align-items: flex-start;
+		}
+
+		.grid-section {
+			min-width: 420px;
+			flex: 1;
+			box-sizing: border-box;
+		}
+
+		.section-title {
+			font-size: 16px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+
+		.ui-jqgrid {
+			box-sizing: border-box;
+			width: 100% !important;
+		}
+
+		.ui-jqgrid .ui-jqgrid-view {
+			box-sizing: border-box;
+			width: 100% !important;
+		}
+
+		.ui-jqgrid-bdiv {
+			max-height: 300px !important;
+			overflow-y: auto !important;
+		}
+
+		.ui-jqgrid .ui-jqgrid-htable,
+		.ui-jqgrid .ui-jqgrid-btable {
+			border-collapse: collapse;
+			border: 1px solid #ccc;
+		}
+
+		.ui-jqgrid tr.jqgrow td {
+			border: 1px solid #ddd !important;
+		}
+
+		.ui-jqgrid .ui-jqgrid-htable th {
+			border: 1px solid #ccc;
+			background-color: #f4f4f4;
+		}
+
+  </style>
+</head>
+
+  <button onclick="openPopup()">📂 CFS 파일 관리 팝업</button>
+
+  <div class="bitMask" onclick="closePopup()"></div>
+
+	<div class="bitPopup">
+	  <div class="popup-header">
+		<div class="title">📂 CFS 파일 관리</div><button class="popup-close-btn" onclick="closePopup()">×</button>
+  	  
+	  </div>
+
+	  <div class="popup-content">
+		<!-- 왼쪽 그리드 -->
+		<div class="grid-section left">
+		  <div class="section-title">파일 목록</div>
+		  <div class="btn-area">
+			<button onclick="addFileRow()">➕ 추가</button>
+			<button onclick="deleteSelectedRows()">🗑️ 선택 삭제</button>
+			<button onclick="uploadFiles()">💾 파일 저장</button>
+		  </div>
+        <input type="hidden" id="orderNo" name="orderNo" value="orderCd"/> 
+		    <table id="fileGrid"></table>
+		</div>
+
+		<!-- 오른쪽 보기 전용 그리드 -->
+		<div class="grid-section right">
+		  <div class="section-title">업로드된 파일 리스트</div>
+		  <table id="viewGrid"></table>
+		</div>
+	  </div>
+	</div>
+
+  <script>
+  //기초 사용 데이터 셋팅
+  var strFileSharing = ":;1:내부용;2:외부용";
+  var strUploadFileTp = ":;1:내부용;2:외부용";
+  
+    
+    function fileInputFormatter(cellvalue, options, rowObject) {
+        return `<input type="file" class="upfiles" data-rowid="${options.rowId}" />`;
+    }
+
+    function deleteButtonFormatter() {
+        //단일 삭제, 
+      return '<button onclick="deleteRow(this)">삭제</button>';
+      
+    }
+
+    function saveButtonFormatter() {
+      return '<button onclick="alert(\'저장 기능은 필요\')">저장</button>';
+    }
+
+    function saveDownloadFormatter() {
+      return '<button onclick="alert(\'다운로드 로직\')">DownLoad</button>';
+    }
+  </script>
+
+  <script>
+    //파일 팝업 open script
+    function openPopup() {
+      $('.bitMask, .bitPopup').show();
+      initGrid();
+      initViewGrid();
+      setTimeout(() => {
+        $("#fileGrid").jqGrid('setGridWidth', $('.bitPopup').width() - 40);
+      }, 100);
+
+      $('.bitMask, .bitPopup').show();
+
+      //if (!$("#fileGrid").html()) initGrid();
+      //if (!$("#viewGrid").html()) initViewGrid();
+
+      setTimeout(() => {
+        $("#fileGrid, #viewGrid").each(function () {
+          $(this).jqGrid('setGridWidth', $(this).closest('.grid-section').width() - 20);
+        });
+      }, 100);
+    }
+
+
+    //파일팝업 닫기기
+    function closePopup() {
+      $('.bitMask, .bitPopup').hide();
+      $("#fileGrid").jqGrid('clearGridData');
+    }
+
+
+    function initGrid() {
+      $("#fileGrid").jqGrid({
+        datatype: "local",
+        colNames: ['파일업로드타입', '공개여부', '파일'],
+        colModel: [
+          { name: 'uploadFileTp', editable :true, edittype:'select', editoptions: { value: strUploadFileTp }, formatter: 'select', width: 150 },
+          { name: 'filePublicTp', editable :true, edittype:'select', editoptions: { value: "1:공개;2:비공개" }, formatter: 'select', width: 50 },
+          { name: 'files', formatter: fileInputFormatter, sortable: false }
+        ],
+        cellEdit: true,
+        editurl: 'clientArray',  // <- inline edit을 위해 필요
+        cellsubmit: 'clientArray',
+        multiselect: true,
+        height: 'auto',
+        autowidth: true,
+        rownumbers: true,
+        
+        onCellSelect: function (rowid, iCol, cellcontent, e) {
+          const cm = $("#fileGrid").jqGrid("getGridParam", "colModel");
+          const colName = cm[iCol].name;
+          if (cm[iCol].editable) {
+            $("#fileGrid").jqGrid("editCell", rowid, iCol, true);
+          }
+        } 
+      });
+      addFileRow(); // 첫 행
+    }
+
+    function addFileRow() {
+      const newId = $("#fileGrid").jqGrid('getDataIDs').length + 1;
+      $("#fileGrid").jqGrid('addRowData', newId, {
+        uploadFileTp: "1", // 기본값
+        filePublicTp: "1",
+        file: ""
+      });
+    }
+
+    function deleteSelectedRows() {
+      const selectedIds = $("#fileGrid").jqGrid("getGridParam", "selarrrow");
+      selectedIds.slice().reverse().forEach(id => {
+          $("#fileGrid").jqGrid("delRowData", id);
+        });
+    }
+
+
+    
+
+      function uploadFiles() {
+        const formData = new FormData();
+        formData.append("orderNo", $("#orderNo").val());
+        let allRowIds = $("#fileGrid").jqGrid("getDataIDs");
+        let rowDataList = [];
+        for (let i = 0; i < allRowIds.length; i++) {
+          let rowId = allRowIds[i];
+
+          // 파일 input 찾아오기
+          let fileInput = document.querySelector(`.upfiles[data-rowid="${rowId}"]`);
+
+          // 파일이 없으면 이 행은 건너뛰기
+          if (!fileInput || fileInput.files.length === 0) {
+              continue;
+          }
+
+          // 파일이 있는 경우에만 데이터 추출해서 추가
+          let rowData = $("#fileGrid").jqGrid("getRowData", rowId);
+          rowDataList.push({
+              uploadFileTp: rowData.uploadFileTp,
+              filePublicTp: rowData.filePublicTp,
+              rowId: rowId
+          });
+
+          formData.append("upfiles", fileInput.files[0]);  // 파일 추가
+          debugger;
+        }
+
+        // JSON으로 데이터 전송
+        formData.append("gridData", JSON.stringify(rowDataList));
+
+        // 업로드할 행이 하나도 없다면 중단
+        if (rowDataList.length === 0) {
+            alert("저장할 파일이 없습니다.");
+            return;
+        }
+
+        // JSON으로 데이터 전송
+        formData.append("gridData", JSON.stringify(rowDataList));
+
+      // FormData의 내용을 콘솔에 출력하기
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ": " + pair[1]);
+        }
+        
+        $.ajax({
+            url: '/api/upload/param.do', // 여기에 실제 업로드 URL
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log("업로드 성공", res);
+                alert("업로드 완료!");
+            },
+            error: function (err) {
+                console.error("업로드 실패", err);
+                alert("업로드 실패!");
+            }
+        });
+    }
+
+
+</script>
+<script>
+
+    function deleteRow(btn) {
+      const rowId = $(btn).closest('tr.jqgrow').attr('id');
+      $("#fileGrid").jqGrid('delRowData', rowId);
+    }
+
+        function initViewGrid() {
+          $("#viewGrid").jqGrid({
+            datatype: "local",
+            colNames: ['파일업로드타입', '공개여부', '파일명', '삭제', '저장', '다운로드', '파일seq'],
+            colModel: [
+              { name: 'uploadFileTp', editable :false, edittype:'select', editoptions: { value: strUploadFileTp }, formatter: 'select' },
+              { name: 'filePublicTp', editable :false, edittype:'select', editoptions: { value: "1:공개;2:비공개" }, formatter: 'select' },
+              { name: 'fileNm', width: 200 },
+              { name: 'delete', formatter: deleteButtonFormatter, width: 80, sortable: false },
+              { name: 'save', formatter: saveButtonFormatter, width: 100, sortable: false },
+              { name: 'download', formatter: saveDownloadFormatter, width: 100, sortable: false },
+              { name: 'seqNo', hidden: true },
+
+            ],
+            height: 'auto',
+            autowidth: true
+            
+          });
+          // 예시 데이터
+          $("#viewGrid").jqGrid('addRowData', 1, { uploadFileTp: "1", filePublicTp: "1" });
+          $("#viewGrid").jqGrid('addRowData', 2, { uploadFileTp: "2", filePublicTp: "2"  });
+        }
+
+  </script>
+</body>
+</html>

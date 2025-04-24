@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 // PostMan / VS-code - Thunder Client(plug in) / Webstorm - Http Client
 
 
-@CrossOrigin(origins = {"*"})
+@CrossOrigin
 @RestController
 public class ApiController {
 	
@@ -114,6 +117,23 @@ public class ApiController {
 		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
 	}
 	
+	@PostMapping(value="/api/upload/param.do")
+	public Map<String, Object> testApi(List<MultipartFile> upfiles, @RequestParam Map<String, String> params ){
+		
+		List<String> list = new ArrayList<String>();
+		for (MultipartFile file : upfiles) {
+			list.add(file.getOriginalFilename());
+		}		
+		logger.info("param : {}",params);		
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		result.put("filename", list);
+		result.put("orderNo", params.get("orderNo"));
+		result.put("gridData", params.get("gridData"));
+		
+		return result;
+	}
 	
 	
 	
