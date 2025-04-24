@@ -56,27 +56,46 @@ public class BbsController {
 	}
 	
 	//detail
-	@GetMapping(value="/detail/{idx}")
-	public Map<String, Object> detail(@PathVariable String idx){
+	@GetMapping(value="/detail/{id}/{idx}")
+	public Map<String, Object> detail(
+			@PathVariable String id,
+			@PathVariable String idx,
+			@RequestHeader Map<String, String> header){
+		logger.info("id : "+id);
+		logger.info("idx : "+idx);
+		logger.info("header : {}",header);
 		resp=new HashMap<String, Object>();
-		BbsDTO content=service.detail(Integer.parseInt(idx));
-		resp.put("detail", content);
+		boolean login  = false;
+		String token = header.get("authotization");
+		Map<String, Object> payload = JwtUtils.readToken(token);
+		String loginId = (String) payload.get("id");
+		
+		if (!loginId.equals("") && loginId.equals(id)) {			
+			BbsDTO content=service.detail(Integer.parseInt(idx));
+			resp.put("detail", content);			
+			login = true;
+		}
+		resp.put("loginYN", login);		
+
 		return resp;
 	}
 	
 	// write
 	@PostMapping(value="/write")
-	public Map<String, Object> write(@RequestBody BbsDTO content){
+	public Map<String, Object> write(@RequestBody BbsDTO content,
+			@RequestHeader Map<String, String> header){
 		resp=new HashMap<String, Object>();
 		boolean success=service.write(content);
 		resp.put("idx", content.getIdx());
 		resp.put("success", success);
 		return resp;
 	}
-	
-	// 흑흑흑흑하기싫어엉
-	@GetMapping(value="/update_view/{idx}")
-	public Map<String, Object> update_view(@PathVariable String idx){
+
+	@GetMapping(value="/update_view/{id}/{idx}")
+	public Map<String, Object> update_view(
+			@PathVariable String id, 
+			@PathVariable String idx,
+			@RequestHeader Map<String, String> header){
 		resp=new HashMap<String, Object>();
 		BbsDTO content=service.detail(Integer.parseInt(idx));
 		resp.put("idx", Integer.parseInt(idx));
@@ -85,15 +104,19 @@ public class BbsController {
 	}
 	
 	@PutMapping(value="/update")
-	public Map<String, Object> update(@RequestBody BbsDTO content){
+	public Map<String, Object> update(@RequestBody BbsDTO content,
+			@RequestHeader Map<String, String> header){
 		resp=new HashMap<String, Object>();
 		boolean success=service.update(content);
 		resp.put("success", success);
 		return resp;
 	}
 	
-	@DeleteMapping(value="/del/{idx}")
-	public Map<String, Object> delete(@PathVariable String idx){
+	@DeleteMapping(value="/del/{id}/{idx}")
+	public Map<String, Object> delete(
+			@PathVariable String id, 
+			@PathVariable String idx,
+			@RequestHeader Map<String, String> header){
 		resp=new HashMap<String, Object>();
 		boolean success=service.delete(Integer.parseInt(idx));
 		resp.put("success", success);
