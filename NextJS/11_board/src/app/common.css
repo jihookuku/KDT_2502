@@ -1,0 +1,34 @@
+@charset "UTF-8";
+th,td {
+	padding : 5px;
+}
+
+table,th,td{
+	border : 1px solid #000;
+	border-collapse: collapse;
+}
+
+table{
+	width : 300px;
+}
+input[type='text'] {
+	width : 100%;
+}
+
+.login{
+	height : 50px;
+}
+
+input[type=text], input[type=password]{
+	width: 96%;
+}
+
+table.form{
+	width:500px;
+}
+
+textarea{
+	width : 98%;
+	height : 150px;
+	resize:none;
+}
