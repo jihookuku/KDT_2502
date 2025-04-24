@@ -25,7 +25,7 @@ public class MemberController {
 	Logger log = LoggerFactory.getLogger(getClass());
 
 	@PostMapping(value = "/login")
-	public Map<String, Object> login(@RequestBody Map<String, String> info, @RequestHeader Map<String, Object> header) {
+	public Map<String, Object> login(@RequestBody Map<String, String> info) {
 		resp = new HashMap<String, Object>();
 		boolean success = service.login(info);
 		// 로그인처리
@@ -33,9 +33,7 @@ public class MemberController {
 			String token = JwtUtils.getToken("id", info.get("id")); //요 id값을 id라는 이름으로 토큰을 발행한다
 			resp.put("token", token);
 			resp.put("success", success);
-			login = true;
 		}
-		resp.put("loginYN", login);
 		return resp;
 	}
 

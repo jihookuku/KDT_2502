@@ -7,26 +7,29 @@
 	<select id="list" resultType="kr.co.himedia.dto.BbsDTO">
 		SELECT idx, subject, bHit,	user_name FROM bbs
 		ORDER BY idx DESC
-		LIMIT #{param2} OFFSET #{param1};
+		LIMIT #{param2} OFFSET #{param1}
 	</select>
 
 	<select id="detail" resultType="kr.co.himedia.dto.BbsDTO">
 		SELECT * FROM bbs WHERE idx=#{param1}
 	</select>
 
-	<insert id="write" parameterType="kr.co.himedia.dto.BbsDTO"
-		useGeneratedKeys="true" keyColumn="idx" keyProperty="idx">
+	<insert id="write" 
+		parameterType="kr.co.himedia.dto.BbsDTO"
+		useGeneratedKeys="true" 
+		keyColumn="idx" 
+		keyProperty="idx">
 		INSERT INTO bbs (user_name, subject, content)
 		VALUES (#{user_name}, #{subject}, #{content})
 	</insert>
 	
 	<update id="update" parameterType="kr.co.himedia.dto.BbsDTO">
 		UPDATE bbs SET user_name=#{user_name}, subject =#{subject}, content=#{content} 
-		WHERE idx=#{idx};
+		WHERE idx=#{idx}
 	</update>
 	
 	<delete id="delete">
-		DELETE FROM bbs WHERE idx=#{param1};
+		DELETE FROM bbs WHERE idx=#{param1}
 	</delete>
 
 </mapper>
