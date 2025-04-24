@@ -1,16 +1,28 @@
 'use client'
 // Component 함수에 async 가 붙으면 use client 를 사용할 수 없다.
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Link from "next/link";
 import "../../common.css";
+import axios from "axios";
 export default function DetailPage(props){
+
+    const [info,setInfo]=useState({idx:0,subject:'',content:'',user_name:'',reg_date:'',bHit:0});
 
     useEffect(() => {
         props.params.then(({slug})=>{
             console.log("idx :"+slug);
             // axios 로 slug 를 가지고 해당 상세 정보를 서버에 요청
+            getDetail(slug);
         });
     },[]);
+
+    const getDetail=async(idx)=>{
+        const id = sessionStorage.getItem("id");
+        const token = sessionStorage.getItem("token");
+        const {data} = await axios.get(`http://localhost/detail/${id}/${idx}`,{headers:{Authorization:token}});
+        console.log(data);
+        setInfo(data.detail);
+    }
 
     return(
         <>
@@ -18,23 +30,23 @@ export default function DetailPage(props){
                 <tbody>
                 <tr>
                     <th>제목</th>
-                    <td></td>
+                    <td>{info.subject}</td>
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td></td>
+                    <td>{info.user_name}</td>
                 </tr>
                 <tr>
                     <th>작성일</th>
-                    <td></td>
+                    <td>{info.reg_date}</td>
                 </tr>
                 <tr>
                     <th>조회수</th>
-                    <td></td>
+                    <td>{info.bHit}</td>
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td></td>
+                    <td>{info.content}</td>
                 </tr>
                 {/*<tr>*/}
                 {/*    <th>사진</th>*/}

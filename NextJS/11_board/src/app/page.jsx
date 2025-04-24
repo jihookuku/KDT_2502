@@ -1,10 +1,15 @@
 'use client'
 import "./common.css"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 export default function LoginPage(){
 
     const [info, setInfo] = useState({id:'',pw:''});
+
+    useEffect(()=>{
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("id");
+    },[]);
 
     const input=(e)=>{
         setInfo({...info,[e.target.name]:e.target.value});
