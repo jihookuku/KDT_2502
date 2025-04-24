@@ -84,10 +84,19 @@ public class BbsController {
 	@PostMapping(value="/write")
 	public Map<String, Object> write(@RequestBody BbsDTO content,
 			@RequestHeader Map<String, String> header){
+		logger.info("header : {}",header);		
 		resp=new HashMap<String, Object>();
-		boolean success=service.write(content);
-		resp.put("idx", content.getIdx());
-		resp.put("success", success);
+		String loginId = (String) JwtUtils.readToken(header.get("authorization")).get("id");
+		boolean login = false;
+		
+		if(!loginId.equals("") && loginId.equals(content.getUser_name())) {
+			boolean success=service.write(content);
+			resp.put("idx", content.getIdx());
+			resp.put("success", success);
+			login = true;
+		}
+		resp.put("loginYN", login);		
+		
 		return resp;
 	}
 
@@ -96,19 +105,39 @@ public class BbsController {
 			@PathVariable String id, 
 			@PathVariable String idx,
 			@RequestHeader Map<String, String> header){
+		
+		logger.info("header : {}",header);		
 		resp=new HashMap<String, Object>();
-		BbsDTO content=service.detail(Integer.parseInt(idx));
-		resp.put("idx", Integer.parseInt(idx));
-		resp.put("detail", content);
+		String loginId = (String) JwtUtils.readToken(header.get("authorization")).get("id");
+		boolean login = false;
+		
+		if(!loginId.equals("") && loginId.equals(id)) {
+			BbsDTO content=service.detail(Integer.parseInt(idx));
+			resp.put("idx", Integer.parseInt(idx));
+			resp.put("detail", content);
+			login = true;
+		}
+		resp.put("loginYN", login);
+		
 		return resp;
 	}
 	
 	@PutMapping(value="/update")
 	public Map<String, Object> update(@RequestBody BbsDTO content,
 			@RequestHeader Map<String, String> header){
+		
+		logger.info("header : {}",header);		
 		resp=new HashMap<String, Object>();
-		boolean success=service.update(content);
-		resp.put("success", success);
+		String loginId = (String) JwtUtils.readToken(header.get("authorization")).get("id");
+		boolean login = false;
+		
+		if(!loginId.equals("") && loginId.equals(content.getUser_name())) {
+			boolean success=service.update(content);
+			resp.put("success", success);
+			login = true;
+		}
+		resp.put("loginYN", login);		
+
 		return resp;
 	}
 	
@@ -117,12 +146,31 @@ public class BbsController {
 			@PathVariable String id, 
 			@PathVariable String idx,
 			@RequestHeader Map<String, String> header){
+		
+		logger.info("header : {}",header);		
 		resp=new HashMap<String, Object>();
-		boolean success=service.delete(Integer.parseInt(idx));
-		resp.put("success", success);
+		String loginId = (String) JwtUtils.readToken(header.get("authorization")).get("id");
+		boolean login = false;
+		
+		if(!loginId.equals("") && loginId.equals(id)) {
+			boolean success=service.delete(Integer.parseInt(idx));
+			resp.put("success", success);
+			login = true;
+		}
+		
+		resp.put("loginYN", login);		
+
 		return resp;
 	}
 	
 	
 
 }
+
+
+
+
+
+
+
+
