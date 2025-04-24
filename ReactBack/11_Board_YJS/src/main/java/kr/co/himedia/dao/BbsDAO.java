@@ -19,4 +19,6 @@ public interface BbsDAO {
 
 	int delete(int idx);
 
+	int pages();
+
 }

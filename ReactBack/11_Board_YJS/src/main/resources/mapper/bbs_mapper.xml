@@ -5,9 +5,13 @@
 <mapper namespace="kr.co.himedia.dao.BbsDAO">
 
 	<select id="list" resultType="kr.co.himedia.dto.BbsDTO">
-		SELECT idx, subject, bHit,	user_name FROM bbs
+		SELECT idx, subject, bHit,	user_name,reg_date FROM bbs
 		ORDER BY idx DESC
 		LIMIT #{param2} OFFSET #{param1}
+	</select>
+	
+	<select id="pages" resultType="int">
+		SELECT CEIL(COUNT(idx)/5) AS pages FROM bbs
 	</select>
 
 	<select id="detail" resultType="kr.co.himedia.dto.BbsDTO">

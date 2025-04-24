@@ -1,5 +1,6 @@
 package kr.co.himedia.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +16,14 @@ public class BbsService {
 	BbsDAO dao;
 	private int content_count = 5; // 한페이지당 몇개?
 
-	public List<BbsDTO> list(int page) {
+	public Map<String, Object> list(int page) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("page", page);
 		int offset = (page - 1) * content_count;
-		return dao.list(offset, content_count);
+		result.put("list", dao.list(offset, content_count));
+		result.put("pages", dao.pages());
+		
+		return result;
 	}
 
 	public BbsDTO detail(int idx) {

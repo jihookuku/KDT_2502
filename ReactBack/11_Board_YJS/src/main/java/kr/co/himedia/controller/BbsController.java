@@ -46,8 +46,7 @@ public class BbsController {
 		String loginId = (String) payload.get("id");
 		
 		if(!loginId.equals("") && loginId.equals(id)) {
-			List<BbsDTO> list=service.list(Integer.parseInt(page));
-			resp.put("list", list);
+			resp = service.list(Integer.parseInt(page));
 			login = true;
 		}
 		resp.put("loginYN", login);		

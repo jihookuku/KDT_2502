@@ -1,7 +1,24 @@
 'use client'
 import "../common.css"
 import Link from "next/link";
+import {useEffect, useRef} from "react";
+import axios from "axios";
 export default function ListPage(){
+
+    let page = useRef(1);
+
+    useEffect(()=>{
+        callList(page.current);
+    },[]);
+
+    const callList=async(page)=>{
+        const id = sessionStorage.getItem("id");
+        const token = sessionStorage.getItem("token");
+        const {data} = await axios.get(`http://localhost/list/${id}/${page}`,{headers:{Authorization:token}});
+        console.log(data);
+    }
+
+
     return(
         <>
             <Link href={"/write"}>
