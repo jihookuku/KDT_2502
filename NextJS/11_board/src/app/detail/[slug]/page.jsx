@@ -24,6 +24,15 @@ export default function DetailPage(props){
         setInfo(data.detail);
     }
 
+    const del=async()=>{
+        const token = sessionStorage.getItem("token");
+        const id = sessionStorage.getItem("id");
+        let {data} = await axios.delete(`http://localhost/del/${id}/${info.idx}`,{headers:{Authorization:token}});
+        console.log(data);
+        alert('삭제 되었습니다.');
+        location.href='/list';
+    }
+
     return(
         <>
             <table className={"form"}>
@@ -64,8 +73,10 @@ export default function DetailPage(props){
                         <Link href={"/list"}>
                             <input type="button" value="리스트"/>
                         </Link>
-                        <input type="button" value="삭제"/>
-                        <input type="button" value="수정"/>
+                        <input type="button" value="삭제" onClick={del}/>
+                        <Link href={`/update/${info.idx}`}>
+                            <input type="button" value="수정"/>
+                        </Link>
                     </th>
                 </tr>
                 </tbody>
