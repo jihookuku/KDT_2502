@@ -13,10 +13,10 @@ export default function ListPage(){
         callList(page.current);
     },[]);
 
-    const callList=async(page)=>{
+    const callList=async(p)=>{
         const id = sessionStorage.getItem("id");
         const token = sessionStorage.getItem("token");
-        const {data} = await axios.get(`http://localhost/list/${id}/${page}`,{headers:{Authorization:token}});
+        const {data} = await axios.get(`http://localhost/list/${id}/${p}`,{headers:{Authorization:token}});
         console.log(data);
         setPages(data.pages); // 보여줄 수 있는 페이지
         page.current = data.page; // 현재페이지
