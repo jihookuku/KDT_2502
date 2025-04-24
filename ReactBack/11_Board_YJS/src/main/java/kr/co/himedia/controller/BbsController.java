@@ -66,7 +66,7 @@ public class BbsController {
 		logger.info("header : {}",header);
 		resp=new HashMap<String, Object>();
 		boolean login  = false;
-		String token = header.get("authotization");
+		String token = header.get("authorization");
 		Map<String, Object> payload = JwtUtils.readToken(token);
 		String loginId = (String) payload.get("id");
 		
