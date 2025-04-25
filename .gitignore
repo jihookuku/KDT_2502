@@ -11,3 +11,4 @@ mvn*
 **/Servers
 **/.metadata/*
 **/node_modules/*
+Boot/FileServer/

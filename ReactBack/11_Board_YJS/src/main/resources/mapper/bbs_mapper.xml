@@ -57,7 +57,7 @@
 	</select>
 	
 	<update id="upHit">
-		UPDATE bbs bHit = bHit+1 WHERE idx = #{param1}
+		UPDATE bbs SET bHit = bHit+1 WHERE idx = #{param1}
 	</update>
 		
 </mapper>
