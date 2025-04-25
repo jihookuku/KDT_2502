@@ -1,5 +1,6 @@
 package kr.co.himedia.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.himedia.dao.BbsDAO;
@@ -97,8 +99,26 @@ public class BbsService {
 	}
 	
 
+	@Transactional
 	public boolean delete(int idx) {
-		int row = dao.delete(idx);
+		// 1. idx 를 가지고 photo 의 new_filename 을 확보
+		List<Map<String, String>> list = dao.photoList(String.valueOf(idx));
+		logger.info("list : {}",list);
+		int row = 0;
+		
+		if(list != null && list.size()>0) {
+			// 2. 해당 idx 가지고 photo 의 데이터를 삭제
+			row = dao.fileDelete(idx);
+			
+			// 4. 파일 삭제
+			for (Map<String, String> map : list) {
+				new File(root+"/"+map.get("new_filename")).delete();
+			}
+		}
+		
+		// 3. bbs  삭제
+		row = dao.delete(idx);// 파일이 있는 경우 자식이 남아있어 연계참조 무결성 제약조건에 위배된다.
+				
 		return row > 0 ? true : false;
 	}
 

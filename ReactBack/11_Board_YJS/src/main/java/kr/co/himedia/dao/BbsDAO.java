@@ -30,4 +30,6 @@ public interface BbsDAO {
 
 	int upHit(int idx);
 
+	int fileDelete(int idx);
+
 }

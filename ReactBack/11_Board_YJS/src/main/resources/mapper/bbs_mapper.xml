@@ -59,6 +59,10 @@
 	<update id="upHit">
 		UPDATE bbs SET bHit = bHit+1 WHERE idx = #{param1}
 	</update>
+	
+	<delete id="fileDelete">
+		DELETE FROM photo WHERE idx = #{param1}
+	</delete>
 		
 </mapper>
 
