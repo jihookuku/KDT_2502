@@ -84,12 +84,12 @@ function PhotoList({photos}){
 
     let content = photos.map(photo=>{
         return(
-            <>
+            <div key={photo.file_idx}>
                 <p><img src={`http://localhost/photo/${photo.file_idx}`} width={300}/></p>
                 <br/>
                 <a href={`http://localhost/download/${photo.file_idx}`}>다운로드</a>
                 <br/>
-            </>
+            </div>
         );
     });
 
