@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.himedia.dto.BbsDTO;
 import kr.co.himedia.service.BbsService;
@@ -81,9 +82,14 @@ public class BbsController {
 	
 	// write
 	@PostMapping(value="/write")
-	public Map<String, Object> write(@RequestBody BbsDTO content,
+	public Map<String, Object> write(MultipartFile[] files,BbsDTO content,
 			@RequestHeader Map<String, String> header){
+		
 		logger.info("header : {}",header);		
+		for (MultipartFile file : files) {
+			logger.info("file name : "+file.getOriginalFilename());
+		}
+		
 		resp=new HashMap<String, Object>();
 		String loginId = (String) JwtUtils.readToken(header.get("authorization")).get("id");
 		boolean login = false;

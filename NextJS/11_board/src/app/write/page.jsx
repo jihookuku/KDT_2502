@@ -26,8 +26,11 @@ export default function WritePage(){
         formData.append("content", info.content);
         formData.append("subject", info.subject);
 
-        const {data} = await axios.post('http://localhost/write',formData,
-            {headers:{Authorization:token, "enc-type": "multipart/form-data", "Content-Type": "application/json"}});
+        for (let i=0; i<upload.length;i++){
+            formData.append("files", upload[i]);
+        }
+        
+        const {data} = await axios.post('http://localhost/write',formData, {headers:{Authorization:token}});
         console.log(data);
         if(data.success){
             alert('글 등록에 성공 하였습니다.');
