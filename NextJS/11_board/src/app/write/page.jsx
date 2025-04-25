@@ -50,7 +50,6 @@ export default function WritePage(){
             console.log('evt',e);//e.target.result 를 이용하면  이미지를 표현 할 수 있다.
             setPrev([...prev,<Image key={e.timeStamp} src={e.target.result} alt={file.name} width={100} height={100}/>]);
         }
-
     }
 
     return(

@@ -3,10 +3,14 @@ import Link from "next/link";
 import "../../common.css";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import Image from "next/image";
 export default function UpdatePage(props){
 
     const [info,setInfo]=useState({idx:0,subject:'',content:'',user_name:'',reg_date:'',bHit:0});
     const [list,setList]=useState('');
+
+    const [prev,setPrev]=useState([]); // 미리보기 이미지
+    const [upload,setUpload]=useState([]); // 업로드 파일
 
     useEffect(() => {
         props.params.then(({slug})=>{
@@ -28,13 +32,30 @@ export default function UpdatePage(props){
         }
     }
 
+    const input=(e)=>{
+        setInfo({...info,[e.target.name]:e.target.value});
+    }
+
+    const fileSelect=(e)=>{
+        // prev state, upload state
+        // e.target.files[0] 로 부터 미리보기 제공, upload 에 저장
+        let file = e.target.files[0];
+        setUpload([...upload,file]); // 업로드 시킬 정보에 등록
+        // 사진 미리보기
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = (e)=>{
+            setPrev([...prev,<Image key={e.timeStamp} src={e.target.result} alt={file.name} width={100} height={100}/>]);
+        }
+    }
+
     return (
         <>
             <table className={"form"}>
                 <tbody>
                 <tr>
                     <th>제목</th>
-                    <td><input type="text" name="subject" value={info.subject}/></td>
+                    <td><input type="text" name="subject" value={info.subject} onChange={input}/></td>
                 </tr>
                 <tr>
                     <th>작성자</th>
@@ -42,12 +63,15 @@ export default function UpdatePage(props){
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td><textarea name="content" value={info.content}></textarea></td>
+                    <td><textarea name="content" value={info.content} onChange={input}></textarea></td>
                 </tr>
                 {list}
                 <tr>
                     <th>사진 추가</th>
-                    <td><input type="file" name="files" /></td>
+                    <td>
+                        <input type="file" name="files" onChange={fileSelect}/>
+                        <div>{prev}</div>
+                    </td>
                 </tr>
                 <tr>
                     <th colSpan="2">
