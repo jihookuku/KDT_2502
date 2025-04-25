@@ -1,6 +1,7 @@
 package kr.co.himedia.service;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,8 +11,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +36,7 @@ public class BbsService {
 	@Value("${spring.servlet.multipart.location}")
 	private String root;
 	
-	
+	Logger logger = LoggerFactory.getLogger(getClass());
 
 	public Map<String, Object> list(int page) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -98,6 +106,35 @@ public class BbsService {
 		}
 		
 		return list;
+	}
+
+	public ResponseEntity<Resource> getFile(String file_idx, String type) {
+		
+		Resource res = null;
+		HttpHeaders headers = new HttpHeaders();
+		
+		// 1. file_idx 를 이용해 new_filename, ori_filename 을 가져온다.
+		Map<String, String> fileMap = dao.fileInfo(file_idx);
+		logger.info("file map : "+fileMap);
+		
+		// 2. new_filename 으로 파일을 가져온다.
+		res = new FileSystemResource(root+"/"+fileMap.get("new_filename"));
+		
+		// 3. photo 냐 download 냐 에 따라 Header 를 설정 해 준다.
+		try {
+			if(type.equals("photo")) {
+				String content_type = Files.probeContentType(Paths.get(root+"/"+fileMap.get("new_filename")));
+				headers.add("Content-Type", content_type);
+			}else {
+				headers.add("Content-Type", "application/octet-stream");		
+				String ori_filename = URLEncoder.encode(fileMap.get("ori_filename"), "UTF-8");			
+				headers.add("content-Disposition", "attachment;filename=\""+ori_filename+"\"");			
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}				
+		//resource, header,status
+		return new ResponseEntity<Resource>(res,headers,HttpStatus.OK);
 	}
 
 }

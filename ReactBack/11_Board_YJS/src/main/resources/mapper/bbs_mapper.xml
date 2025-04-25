@@ -51,6 +51,11 @@
 		SELECT * FROM photo WHERE idx = #{param1}
 	</select>
 	
+	<select id="fileInfo" resultType="map">
+		SELECT ori_filename, new_filename 
+			FROM photo WHERE file_idx=#{param1}
+	</select>
+	
 	
 </mapper>
 

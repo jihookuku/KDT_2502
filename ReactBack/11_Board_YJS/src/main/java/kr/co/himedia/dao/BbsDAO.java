@@ -26,4 +26,6 @@ public interface BbsDAO {
 
 	List<Map<String, String>> photoList(String idx);
 
+	Map<String, String> fileInfo(String file_idx);
+
 }
