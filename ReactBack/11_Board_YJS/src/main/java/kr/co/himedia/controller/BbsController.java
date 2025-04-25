@@ -72,7 +72,11 @@ public class BbsController {
 		
 		if (!loginId.equals("") && loginId.equals(id)) {			
 			BbsDTO content=service.detail(Integer.parseInt(idx));
-			resp.put("detail", content);			
+			resp.put("detail", content);
+			
+			List<Map<String, String>> photoList = service.photoList(idx);
+			resp.put("photos", photoList);			
+			
 			login = true;
 		}
 		resp.put("loginYN", login);		

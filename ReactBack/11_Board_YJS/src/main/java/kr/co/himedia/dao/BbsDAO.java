@@ -1,6 +1,7 @@
 package kr.co.himedia.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -22,5 +23,7 @@ public interface BbsDAO {
 	int pages();
 
 	int fileWrite(int idx, String ori_filename, String new_filename);
+
+	List<Map<String, String>> photoList(String idx);
 
 }

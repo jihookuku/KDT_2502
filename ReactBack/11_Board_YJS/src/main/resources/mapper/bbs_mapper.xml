@@ -46,6 +46,12 @@
 		INSERT INTO photo(idx,ori_filename,new_filename)
 			VALUES(#{param1},#{param2},#{param3})
 	</insert>	
+	
+	<select id="photoList" resultType="map">
+		SELECT * FROM photo WHERE idx = #{param1}
+	</select>
+	
+	
 </mapper>
 
 

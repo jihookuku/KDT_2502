@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,4 +87,37 @@ public class BbsService {
 		return row > 0 ? true : false;
 	}
 
+	public List<Map<String, String>> photoList(String idx) {
+		
+		List<Map<String, String>> list = new ArrayList<Map<String,String>>();
+		
+		try {
+			list = dao.photoList(idx);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
