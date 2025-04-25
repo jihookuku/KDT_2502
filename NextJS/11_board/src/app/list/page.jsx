@@ -27,8 +27,7 @@ export default function ListPage(){
                     <tr key={item.idx}>
                         <td>{item.idx}</td>
                         <th>
-                            <img src="/image.png" width="25px"/>
-                            <img src="/noimage.png" width="25px"/>
+                            {item.cnt > 0 ? <img src="/image.png" width="25px"/> : <img src="/noimage.png" width="25px"/>}
                         </th>
                         <td><Link href={`/detail/${item.idx}`}>{item.subject}</Link></td>
                         <td>{item.user_name}</td>
