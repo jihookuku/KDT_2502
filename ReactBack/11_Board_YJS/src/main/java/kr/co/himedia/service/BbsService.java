@@ -90,10 +90,12 @@ public class BbsService {
 		return success;
 	}
 
-	public boolean update(BbsDTO content) {
-		int row = dao.update(content);
-		return row > 0 ? true : false;
+	
+	public boolean update(BbsDTO content, MultipartFile[] files) {
+		dao.update(content);
+		return fileSave(content.getIdx(), files);
 	}
+	
 
 	public boolean delete(int idx) {
 		int row = dao.delete(idx);

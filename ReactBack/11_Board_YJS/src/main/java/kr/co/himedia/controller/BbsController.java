@@ -139,16 +139,21 @@ public class BbsController {
 	}
 	
 	@PutMapping(value="/update")
-	public Map<String, Object> update(@RequestBody BbsDTO content,
+	public Map<String, Object> update(MultipartFile[] files,BbsDTO content,
 			@RequestHeader Map<String, String> header){
 		
 		logger.info("header : {}",header);		
+		for (MultipartFile file : files) {
+			logger.info("file name : "+file.getOriginalFilename());
+		}
+				
 		resp=new HashMap<String, Object>();
 		String loginId = (String) JwtUtils.readToken(header.get("authorization")).get("id");
 		boolean login = false;
 		
 		if(!loginId.equals("") && loginId.equals(content.getUser_name())) {
-			boolean success=service.update(content);
+			boolean success=service.update(content,files);
+			resp.put("idx", content.getIdx());
 			resp.put("success", success);
 			login = true;
 		}

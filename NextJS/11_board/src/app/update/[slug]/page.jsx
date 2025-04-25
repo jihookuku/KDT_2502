@@ -49,6 +49,28 @@ export default function UpdatePage(props){
         }
     }
 
+    const save=async (e)=>{
+        const formData = new FormData();
+        const id = sessionStorage.getItem("id");
+        const token = sessionStorage.getItem("token");
+
+        formData.append("user_name", id);
+        formData.append("content", info.content);
+        formData.append("subject", info.subject);
+        formData.append("idx", info.idx);
+
+        for (let i=0; i<upload.length;i++){
+            formData.append("files", upload[i]);
+        }
+
+        const {data} = await axios.put('http://localhost/update',formData, {headers:{Authorization:token}});
+        console.log(data);
+        if(data.success){
+            alert('글 수정에 성공 하였습니다.');
+            location.href='/detail/'+data.idx;
+        }
+    }
+
     return (
         <>
             <table className={"form"}>
@@ -78,7 +100,7 @@ export default function UpdatePage(props){
                         <Link href={"/list"}>
                             <input type="button" value="리스트"/>
                         </Link>
-                        <button>저장</button>
+                        <button onClick={save}>저장</button>
                     </th>
                 </tr>
                 </tbody>
