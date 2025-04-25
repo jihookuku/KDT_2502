@@ -21,4 +21,6 @@ public interface BbsDAO {
 
 	int pages();
 
+	int fileWrite(int idx, String ori_filename, String new_filename);
+
 }

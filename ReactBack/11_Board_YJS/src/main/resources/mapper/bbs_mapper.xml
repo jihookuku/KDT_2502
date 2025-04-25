@@ -35,5 +35,18 @@
 	<delete id="delete">
 		DELETE FROM bbs WHERE idx=#{param1}
 	</delete>
-
+	
+	<insert id="fileWrite">
+		INSERT INTO photo(idx,ori_filename,new_filename)
+			VALUES(#{param1},#{param2},#{param3})
+	</insert>	
 </mapper>
+
+
+
+
+
+
+
+
+

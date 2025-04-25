@@ -82,7 +82,8 @@ public class BbsController {
 	
 	// write
 	@PostMapping(value="/write")
-	public Map<String, Object> write(MultipartFile[] files,BbsDTO content,
+	public Map<String, Object> write(MultipartFile[] files,
+			BbsDTO content,
 			@RequestHeader Map<String, String> header){
 		
 		logger.info("header : {}",header);		
@@ -95,7 +96,7 @@ public class BbsController {
 		boolean login = false;
 		
 		if(!loginId.equals("") && loginId.equals(content.getUser_name())) {
-			boolean success=service.write(content);
+			boolean success=service.write(content,files);
 			resp.put("idx", content.getIdx());
 			resp.put("success", success);
 			login = true;
