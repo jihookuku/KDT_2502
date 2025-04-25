@@ -29,7 +29,7 @@ export default function WritePage(){
         for (let i=0; i<upload.length;i++){
             formData.append("files", upload[i]);
         }
-        
+
         const {data} = await axios.post('http://localhost/write',formData, {headers:{Authorization:token}});
         console.log(data);
         if(data.success){

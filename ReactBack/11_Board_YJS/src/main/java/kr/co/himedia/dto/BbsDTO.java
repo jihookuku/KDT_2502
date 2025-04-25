@@ -5,11 +5,19 @@ import java.sql.Date;
 public class BbsDTO {
 	
 	private int idx;
+	private int cnt;
 	private String user_name;
 	private String subject;
 	private String content;
 	private int bHit;
 	private Date reg_date;
+		
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getIdx() {
 		return idx;
 	}

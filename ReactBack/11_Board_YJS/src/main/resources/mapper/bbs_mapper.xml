@@ -5,8 +5,14 @@
 <mapper namespace="kr.co.himedia.dao.BbsDAO">
 
 	<select id="list" resultType="kr.co.himedia.dto.BbsDTO">
-		SELECT idx, subject, bHit,	user_name,reg_date FROM bbs
-		ORDER BY idx DESC
+		SELECT 
+			b.idx
+			,(SELECT COUNT(file_idx) FROM photo WHERE idx = b.idx) AS cnt
+			,b.subject
+			,b.bHit
+			,b.user_name
+			,b.reg_date
+		FROM bbs b ORDER BY b.idx DESC
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
