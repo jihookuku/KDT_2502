@@ -28,4 +28,6 @@ public interface BbsDAO {
 
 	Map<String, String> fileInfo(String file_idx);
 
+	int upHit(int idx);
+
 }

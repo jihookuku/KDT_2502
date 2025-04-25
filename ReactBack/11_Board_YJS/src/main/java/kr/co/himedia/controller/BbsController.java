@@ -73,7 +73,7 @@ public class BbsController {
 		String loginId = (String) payload.get("id");
 		
 		if (!loginId.equals("") && loginId.equals(id)) {			
-			BbsDTO content=service.detail(Integer.parseInt(idx));
+			BbsDTO content=service.detail(Integer.parseInt(idx), true);
 			resp.put("detail", content);
 			
 			List<Map<String, String>> photoList = service.photoList(idx);
@@ -124,7 +124,7 @@ public class BbsController {
 		boolean login = false;
 		
 		if(!loginId.equals("") && loginId.equals(id)) {
-			BbsDTO content=service.detail(Integer.parseInt(idx));
+			BbsDTO content=service.detail(Integer.parseInt(idx),false);
 			resp.put("idx", Integer.parseInt(idx));
 			resp.put("detail", content);
 			login = true;

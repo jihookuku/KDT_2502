@@ -56,7 +56,10 @@
 			FROM photo WHERE file_idx=#{param1}
 	</select>
 	
-	
+	<update id="upHit">
+		UPDATE bbs bHit = bHit+1 WHERE idx = #{param1}
+	</update>
+		
 </mapper>
 
 

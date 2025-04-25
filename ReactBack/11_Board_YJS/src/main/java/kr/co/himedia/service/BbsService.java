@@ -48,7 +48,12 @@ public class BbsService {
 		return result;
 	}
 
-	public BbsDTO detail(int idx) {
+	public BbsDTO detail(int idx, boolean up) {
+		
+		if(up) {
+			dao.upHit(idx);
+		}
+		
 		return dao.detail(idx);
 	}
 
