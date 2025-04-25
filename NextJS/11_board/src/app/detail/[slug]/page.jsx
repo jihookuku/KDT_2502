@@ -7,6 +7,7 @@ import axios from "axios";
 export default function DetailPage(props){
 
     const [info,setInfo]=useState({idx:0,subject:'',content:'',user_name:'',reg_date:'',bHit:0});
+    const [list,setList]=useState('');
 
     useEffect(() => {
         props.params.then(({slug})=>{
@@ -22,6 +23,10 @@ export default function DetailPage(props){
         const {data} = await axios.get(`http://localhost/detail/${id}/${idx}`,{headers:{Authorization:token}});
         console.log(data);
         setInfo(data.detail);
+
+        if(data.photos.length>0){
+            setList(<PhotoList photos={data.photos}/>);
+        }
     }
 
     const del=async()=>{
@@ -57,17 +62,7 @@ export default function DetailPage(props){
                     <th>내용</th>
                     <td>{info.content}</td>
                 </tr>
-                {/*<tr>*/}
-                {/*    <th>사진</th>*/}
-                {/*    <td>*/}
-                {/*        <p>*/}
-                {/*            <img src="" width="300px"/>*/}
-                {/*        </p>*/}
-                {/*        <br/>*/}
-                {/*        <a href="#">다운로드</a>*/}
-                {/*        <br/>*/}
-                {/*    </td>*/}
-                {/*</tr>*/}
+                {list}
                 <tr>
                     <th colSpan="2">
                         <Link href={"/list"}>
@@ -84,3 +79,25 @@ export default function DetailPage(props){
         </>
     );
 }
+
+function PhotoList({photos}){
+
+    let content = photos.map(photo=>{
+        return(
+            <>
+                <p><img src={`http://localhost/photo/${photo.file_idx}`} width={300}/></p>
+                <br/>
+                <a href={`http://localhost/download/${photo.file_idx}`}>다운로드</a>
+                <br/>
+            </>
+        );
+    });
+
+    return(
+        <tr>
+            <th>사진</th>
+            <td>{content}</td>
+        </tr>
+    );
+}
+
