@@ -2,14 +2,31 @@
 import Link from "next/link";
 import "../../common.css";
 import axios from "axios";
+import {useEffect, useState} from "react";
 export default function UpdatePage(props){
 
-    // axios 에서 await 을 쓰고 싶다면 그것을 실행하는 함수가 async 를 달고 있어야 한다.
-    // 하지만  props.params 에서는 async 를 붙일수 없다.
-    // 그럼 어떻게 처리 해야 할지...
-    props.params.then(({slug})=>{
-        console.log("idx:"+slug);
-    });
+    const [info,setInfo]=useState({idx:0,subject:'',content:'',user_name:'',reg_date:'',bHit:0});
+    const [list,setList]=useState('');
+
+    useEffect(() => {
+        props.params.then(({slug})=>{
+            console.log("idx :"+slug);
+            // axios 로 slug 를 가지고 해당 상세 정보를 서버에 요청
+            getDetail(slug);
+        });
+    },[]);
+
+    const getDetail=async(idx)=>{
+        const id = sessionStorage.getItem("id");
+        const token = sessionStorage.getItem("token");
+        const {data} = await axios.get(`http://localhost/update_view/${id}/${idx}`,{headers:{Authorization:token}});
+        console.log(data);
+        setInfo(data.detail);
+
+        if(data.photos.length>0){
+            setList(<PhotoList photos={data.photos}/>);
+        }
+    }
 
     return (
         <>
@@ -17,28 +34,21 @@ export default function UpdatePage(props){
                 <tbody>
                 <tr>
                     <th>제목</th>
-                    <td><input type="text" name="subject" value=""/></td>
+                    <td><input type="text" name="subject" value={info.subject}/></td>
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td><input type="text" name="user_name" value=""/></td>
+                    <td><input type="text" name="user_name" value={info.user_name} readOnly={true}/></td>
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td><textarea name="content"></textarea></td>
+                    <td><textarea name="content" value={info.content}></textarea></td>
                 </tr>
-                {/*<tr>*/}
-                {/*    <th>사진</th>*/}
-                {/*    <td>*/}
-                {/*        <p>*/}
-                {/*            <img src="" width="500px"/>*/}
-                {/*        </p>*/}
-                {/*    </td>*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*    <th>사진 추가</th>*/}
-                {/*    <td><input type="file" name="files" multiple="multiple"/></td>*/}
-                {/*</tr>*/}
+                {list}
+                <tr>
+                    <th>사진 추가</th>
+                    <td><input type="file" name="files" /></td>
+                </tr>
                 <tr>
                     <th colSpan="2">
                         <Link href={"/list"}>
@@ -50,5 +60,23 @@ export default function UpdatePage(props){
                 </tbody>
             </table>
         </>
+    );
+}
+
+function PhotoList({photos}){
+
+    let content = photos.map(photo=>{
+        return(
+            <div key={photo.file_idx}>
+                <p><img src={`http://localhost/photo/${photo.file_idx}`} width={300}/></p>
+            </div>
+        );
+    });
+
+    return(
+        <tr>
+            <th>사진</th>
+            <td>{content}</td>
+        </tr>
     );
 }

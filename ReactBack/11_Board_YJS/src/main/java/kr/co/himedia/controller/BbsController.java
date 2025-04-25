@@ -127,6 +127,10 @@ public class BbsController {
 			BbsDTO content=service.detail(Integer.parseInt(idx),false);
 			resp.put("idx", Integer.parseInt(idx));
 			resp.put("detail", content);
+			
+			List<Map<String, String>> photoList = service.photoList(idx);
+			resp.put("photos", photoList);	
+			
 			login = true;
 		}
 		resp.put("loginYN", login);
