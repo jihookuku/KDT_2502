@@ -4,16 +4,17 @@ import {useEffect} from "react";
 export default function HomePage(){
 
     useEffect(() => {
-
+        /*
         // 1.script 태그 생성
         const script = document.createElement('script');
         // 2. head 태그에 끼워넣기
         script.src='https://dapi.kakao.com/v2/maps/sdk.js?appkey=ba582e11274f85938e4607271e92ac7f&autoload=false';
         document.head.appendChild(script);
+        */
         //3.  script 가 다 읽혀지면, 라이브러리 읽기
         let mapContainer = document.getElementById('map')
 
-        script.onload = ()=>{
+        //script.onload = ()=>{
             kakao.maps.load(()=>{
                 const mapOption = {
                     center: new kakao.maps.LatLng(37.57190029146425, 126.98715765847491), // 지도의 중심좌표
@@ -40,7 +41,7 @@ export default function HomePage(){
                 });
 
             });
-        }
+        //}
 
     }, []);
 
