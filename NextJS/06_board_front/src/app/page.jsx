@@ -3,7 +3,8 @@ import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import Link from "next/link";
 import "./List.css";
-
+import {Pagination, Stack} from "@mui/material";
+// npm install @mui/material @emotion/react @emotion/styled
 
 export default function App(){
     // list, detail, delete 중에서 페이지가 필요한 녀석은?
@@ -16,13 +17,13 @@ export default function App(){
         // 서버에 리스트 요청 (/list/1)
         makeList();
     },[]);
-
+    /*
     const more=()=>{
         page.current++;
         console.log(page.current+' page 호출');
         makeList();
     }
-
+    */
     const makeList=()=>{
         axios.get(`http://localhost/list/${page.current}`).then(({data})=>{
             console.log(data);
@@ -41,8 +42,8 @@ export default function App(){
                     </div>
                 );
             });
-            setList([...list,content]);
-
+            //setList([...list,content]);
+            setList(content);
         });
     }
 
@@ -60,8 +61,18 @@ export default function App(){
             <p>current page : {page.current} / total page : {pages}</p>
             <hr/>
             {list}
-            {pages > page.current ? <div className="more" onClick={more}>더보기</div> : ''}
-
+            <div style={{margin:15}}>
+                <Stack spacing={2}>
+                    <Pagination 
+                        count={pages}// 전체 페이지 수
+                        color={"primary"}
+                        variant={"outlined"}
+                        shape={"rounded"}
+                        siblingCount={0} // 현재 페이지 양쪽에 표시할 갯수
+                        onChange={changePage}
+                    />
+                </Stack>
+            </div>
         </div>
     );
 }
