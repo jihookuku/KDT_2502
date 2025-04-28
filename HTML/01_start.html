@@ -1,0 +1,43 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>지도 생성하기</title>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=ba582e11274f85938e4607271e92ac7f"></script>
+</head>
+<body>
+<!-- 지도를 표시할 div 입니다 -->
+<div id="map" style="width:100%;height:500px;"></div>
+<p id="msg"></p>
+
+</body>
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new kakao.maps.LatLng(37.57190029146425, 126.98715765847491), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    // 최초 마커 등록
+    let marker = new kakao.maps.Marker({
+        position: map.getCenter(),
+    });
+
+    marker.setMap(map);
+
+
+    // 이벤트 등록
+    kakao.maps.event.addListener(map, 'click', function (event) {
+        console.log('evt',event);
+        let latLan = event.latLng;
+        marker.setPosition(latLan); // 특정 위도 경도록 마커 이동
+        let msg = '클릭한 위치의 위도는 '+latLan.getLat()+',  경도는 '+latLan.getLng()+'  입니다.';
+        document.getElementById('msg').innerHTML = msg;
+
+    });
+
+
+</script>
+</html>
