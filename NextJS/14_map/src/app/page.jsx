@@ -1,7 +1,10 @@
 'use client'
 /*global kakao*/
-import {useEffect} from "react";
+import {useEffect, useRef, useState} from "react";
 export default function HomePage(){
+
+    const [msg, setMsg] = useState('');
+    const container = useRef(null);
 
     useEffect(() => {
         /*
@@ -22,7 +25,7 @@ export default function HomePage(){
                 };
 
                 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-                let map = new kakao.maps.Map(mapContainer, mapOption);
+                let map = new kakao.maps.Map(container.current, mapOption);
 
                 // 최초 마커 등록
                 let marker = new kakao.maps.Marker({
@@ -37,20 +40,18 @@ export default function HomePage(){
                     let latLan = event.latLng;
                     marker.setPosition(latLan); // 특정 위도 경도록 마커 이동
                     let msg = '클릭한 위치의 위도는 '+latLan.getLat()+',  경도는 '+latLan.getLng()+'  입니다.';
-                    document.getElementById('msg').innerHTML = msg;
+                    //document.getElementById('msg').innerHTML = msg;
+                    setMsg(msg);
                 });
 
             });
         //}
-
     }, []);
-
-
 
     return (
         <>
-            <div id="map" style={{width:"100%",height:"500px"}}></div>
-            <p id="msg"></p>
+            <div id="map" style={{width:"100%",height:"500px"}} ref={container}></div>
+            <p id="msg">{msg}</p>
         </>
     );
 }
