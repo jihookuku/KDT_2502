@@ -34,7 +34,7 @@ export default function DetailPage(props){
             maxWidthForMobile:'332px', // 모바일버전으로 변경되는 사이즈
             editorResizeMode:'none',
             toolbar: 'simple',
-            toolbar_simple:'{save, print, html2pdf, code}'
+            toolbar_simple:'{save, print, html2pdf, code}' // html 저장, 출력, pdf 저장, html 코드로 보기
         });
         editor.setHTMLCode(data.detail.content);
         editor.setReadOnly();
@@ -43,7 +43,7 @@ export default function DetailPage(props){
     return(
         <>
             <h3>상세보기</h3>
-            <table>
+            <table className={"editor_table"}>
                 <tbody>
                     <tr>
                         <td>제목 : {info.subject}</td>
