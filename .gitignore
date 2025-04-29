@@ -12,3 +12,4 @@ mvn*
 **/.metadata/*
 **/node_modules/*
 Boot/FileServer/
+NextJS/15_editor/public/richtexteditor/
