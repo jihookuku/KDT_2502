@@ -13,3 +13,4 @@ mvn*
 **/node_modules/*
 Boot/FileServer/
 NextJS/15_editor/public/richtexteditor/
+NextJS/16_editor_board/public/richtexteditor/
