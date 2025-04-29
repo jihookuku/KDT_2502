@@ -2,6 +2,8 @@
 import Link from "next/link";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import {Pagination, Stack} from "@mui/material";
+// npm install @mui/material @emotion/react @emotion/styled
 
 export default function ListPage(){
 
@@ -10,12 +12,14 @@ export default function ListPage(){
     }, []);
 
     const [list, setList] = useState([]);
+    const [page, setPage] = useState(0);
 
     const callList = async (no)=>{
         const id = sessionStorage.getItem('id');
         const token = sessionStorage.getItem('token');
         const {data} = await axios.get(`http://localhost/list/${id}/${no}`,{headers: {'Authorization': token}});
         console.log(data);
+        setPage(data.pages);
         let content = data.list.map(item=>(
             <tr key={item.idx}>
                 <td>{item.idx}</td>
@@ -41,6 +45,16 @@ export default function ListPage(){
                 </thead>
                 <tbody>
                     {list}
+                    <tr>
+                        <th colSpan={4}>
+                            <Stack spacing={2}>
+                                <Pagination count={page} onChange={(e,page)=>{
+                                    console.log(e);
+                                    callList(page)
+                                }}/>
+                            </Stack>
+                        </th>
+                    </tr>
                 </tbody>
             </table>
         </>
