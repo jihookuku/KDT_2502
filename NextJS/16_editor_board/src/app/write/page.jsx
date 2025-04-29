@@ -16,18 +16,25 @@ export default function WritePage(){
             maxWidthForMobile:'332px',
             editorResizeMode:'none',
         });
+        editor.current.setHTMLCode('');
     }, []);
+
 
     const save = () => {
         let code = editor.current.getHTMLCode();
-        // console.log(code.length/1024+'KB');
+        console.log(code.length/1024+'KB');
         // 총 컨텐츠가 20MB 를 넘어갔을 경우 저장하지 않는다.
-        if(code.length>=(20*1024*1024)){
+        if(code.length>=(5*1024*1024)){
             alert('컨텐츠가 너무 큽니다. 이미지의 크기나 갯수를 줄여 주세요');
         }else{
             const token = sessionStorage.getItem('token');
-            setInfo({...info,content:code});
-            axios.post('http://localhost/write',info,{headers:{Authorization:token}})
+
+            let formData = new FormData();
+            formData.append('user_name',info.user_name);
+            formData.append('subject',info.subject);
+            formData.append('content',code);
+
+            axios.post('http://localhost/write',formData,{headers:{Authorization:token}})
                 .then(({data})=>{
                     console.log(data);
                     debugger;

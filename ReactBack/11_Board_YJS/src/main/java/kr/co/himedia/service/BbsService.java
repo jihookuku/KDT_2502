@@ -61,8 +61,12 @@ public class BbsService {
 
 	public boolean write(BbsDTO content, MultipartFile[] files) {
 		int row = dao.write(content); // 글쓰기
-		int idx = content.getIdx();		
-		return fileSave(idx,files);		
+		int idx = content.getIdx();	
+		boolean save_suc = true;
+		if(files.length>0) {
+			save_suc = fileSave(idx,files);
+		}		
+		return row>0 && save_suc;	
 	}
 	
 	private boolean fileSave(int idx, MultipartFile[] files) {

@@ -92,6 +92,10 @@ public class BbsController {
 			BbsDTO content,
 			@RequestHeader Map<String, String> header){
 		
+		if(files == null) {
+			files = new MultipartFile[] {};
+		}
+		
 		logger.info("header : {}",header);		
 		for (MultipartFile file : files) {
 			logger.info("file name : "+file.getOriginalFilename());
