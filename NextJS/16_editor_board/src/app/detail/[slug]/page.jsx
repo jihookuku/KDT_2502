@@ -29,7 +29,13 @@ export default function DetailPage(props){
         let {data} = await axios.get(`http://localhost/detail/${id}/${idx}`,{headers:{Authorization: token}});
         console.log(data);
         setInfo(data.detail);
-        editor = new RichTextEditor(div.current);
+        // 적용 element, config
+        editor = new RichTextEditor(div.current,{
+            maxWidthForMobile:'332px', // 모바일버전으로 변경되는 사이즈
+            editorResizeMode:'none',
+            toolbar: 'simple',
+            toolbar_simple:'{save, print, html2pdf, code}'
+        });
         editor.setHTMLCode(data.detail.content);
         editor.setReadOnly();
     }
