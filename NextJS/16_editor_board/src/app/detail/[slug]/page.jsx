@@ -1,6 +1,7 @@
 'use client'
-import {useEffect} from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
+import Link from "next/link";
 
 export default function DetailPage(props){
 
@@ -18,17 +19,43 @@ export default function DetailPage(props){
        });
     }, []);
 
+    const [info,setInfo] = useState({});
+    let div = useRef(null);
+    let editor = null;
+
     const getDetail = async(idx)=>{
         const id = sessionStorage.getItem('id');
         const token = sessionStorage.getItem('token');
         let {data} = await axios.get(`http://localhost/detail/${id}/${idx}`,{headers:{Authorization: token}});
         console.log(data);
+        setInfo(data.detail);
+        editor = new RichTextEditor(div.current);
+        editor.setHTMLCode(data.detail.content);
+        editor.setReadOnly();
     }
-
 
     return(
         <>
             <h3>상세보기</h3>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>제목 : {info.subject}</td>
+                    </tr>
+                    <tr>
+                        <td>작성자 : {info.user_name}</td>
+                    </tr>
+                    <tr>
+                        <td>작성일 : {info.reg_date}</td>
+                    </tr>
+                    <tr>
+                        <td><div ref={div}></div></td>
+                    </tr>
+                    <tr>
+                        <th><Link href={'/list'}>리스트</Link></th>
+                    </tr>
+                </tbody>
+            </table>
         </>
     );
 }
