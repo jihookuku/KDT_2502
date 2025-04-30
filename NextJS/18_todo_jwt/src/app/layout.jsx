@@ -1,4 +1,7 @@
 'use client'
+import {Provider} from "react-redux";
+import {store} from "@/redux/Store";
+
 export default function Layout({ children }) {
     return (
         <html>
@@ -6,7 +9,10 @@ export default function Layout({ children }) {
             <meta charSet="utf-8" />
         </head>
         <body>
-        {children}
+        <Provider store={store}>
+            {children}
+        </Provider>
+
         </body>
         </html>
     );

@@ -1,7 +1,7 @@
 'use client'
 import './commons.css';
 import {useEffect, useState} from "react";
-import axios from "axios";
+import {store} from '@/redux/Store'
 
 export default function LoginPage(){
 
@@ -18,17 +18,7 @@ export default function LoginPage(){
     };
 
     const login = () => {
-        // await-async : 비동기로 받은 내용을 외부로 반환하고 싶을때
-        // then : 비동기로 받은 내용을 자체적으로 처리 하고 싶을때
-        axios.post("http://localhost/login",info).then(({data})=>{
-            console.log(data);
-            if(data.success){
-                sessionStorage.setItem("token",data.token);
-                sessionStorage.setItem("id",info.id);
-                //debugger;
-                location.href='/list';
-            }
-        });
+        store.dispatch({type:'member/login',payload:info});
     };
 
     return(
