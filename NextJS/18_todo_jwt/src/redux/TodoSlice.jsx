@@ -41,15 +41,25 @@ const TodoSlice = createSlice({
                     }else{
                         store.dispatch({type:'todo/list'});
                     }
-
                 });
-
         },
         toggle(state, action){
 
         },
         del(state, action){
-
+            axios.delete('http://localhost/del',{
+                data:{id:state.id,idx:action.payload}
+                ,headers:{Authorization:state.token}
+            }).then(({data})=>{
+                console.log(data);
+                if(data.loginYN){
+                    if(data.success){
+                        store.dispatch({type:'todo/list'});
+                    }
+                }else{
+                    store.dispatch({type:'todo/loginChk'});
+                }
+            });
         },
         loginChk(state, action){
             alert('로그인이 필요한 서비스 입니다.');

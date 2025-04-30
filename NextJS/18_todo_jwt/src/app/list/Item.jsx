@@ -1,8 +1,12 @@
+import {store} from "@/redux/Store";
+
 export default function Item({item}){
 
     const toggle = () => {};
 
-    const del = () => {};
+    const del = () => {
+        store.dispatch({type:'todo/del',payload:item.idx});
+    };
 
     return (
         <div className={"item"}>

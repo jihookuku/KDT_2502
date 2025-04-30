@@ -88,6 +88,7 @@ public class TodoController {
 		log.info("params : "+params);
 		log.info("header : "+header);
 		result = new HashMap<String, Object>();
+		boolean login = false;
 		
 		String token = header.get("authorization");
 		Map<String, Object> payload = JwtUtils.readToken(token);
@@ -96,7 +97,11 @@ public class TodoController {
 		if (loginId != null && loginId.equals(params.get("id"))) {
 			boolean success = service.del(params);
 			result.put("success", success);
+			login = true;
 		}
+		
+		result.put("loinYN", login);
+		
 		return result;
 	}
 	
