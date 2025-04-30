@@ -44,7 +44,15 @@ const TodoSlice = createSlice({
                 });
         },
         toggle(state, action){
-
+            console.log(action.payload);
+            let {idx, done} = action.payload;
+            axios.put('http://localhost/toggle',{idx:idx,done:done,id:state.id},
+                {headers:{Authorization:state.token}}).then(({data})=>{
+                    console.log(data);
+                    if(!data.loginYN){
+                        store.dispatch({type:'todo/loginChk'});
+                    }
+            });
         },
         del(state, action){
             axios.delete('http://localhost/del',{
