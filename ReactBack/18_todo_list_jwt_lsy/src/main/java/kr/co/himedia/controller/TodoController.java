@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -98,11 +99,54 @@ public class TodoController {
 			boolean success = service.del(params);
 			result.put("success", success);
 			login = true;
-		}
-		
-		result.put("loinYN", login);
-		
+		}		
+		result.put("loginYN", login);		
 		return result;
 	}
+	
+	@PutMapping(value="/toggle")
+	public Map<String, Object> toggle(
+			@RequestBody Map<String, String> params,
+			@RequestHeader Map<String, String> header){
+		
+		log.info("params : {}",params);//id,idx,done
+		log.info("header : {}",header);
+		
+		result = new HashMap<String, Object>();
+		boolean login =  false;
+		
+		String token = header.get("authorization");
+		Map<String, Object> payload = JwtUtils.readToken(token);
+		String loginId = (String) payload.get("id");
+		
+		if (loginId != null && loginId.equals(params.get("id"))) {
+			login = true;
+			boolean success = service.toggle(params.get("idx"),params.get("done"));
+			result.put("success", success);
+		}
+		
+		result.put("loginYN", login);
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

@@ -31,6 +31,10 @@ Logger log = LoggerFactory.getLogger(getClass());
 		int row = dao.del(params.get("idx"));
 		return row > 0;
 	}
+
+	public boolean toggle(String idx, String done) {
+		return dao.toggle(idx,done) > 0;
+	}
 	
 	
 	

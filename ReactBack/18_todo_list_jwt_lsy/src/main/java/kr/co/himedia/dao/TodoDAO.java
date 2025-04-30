@@ -16,4 +16,6 @@ public interface TodoDAO {
 
 	int del(String string);
 
+	int toggle(String idx, String done);
+
 }

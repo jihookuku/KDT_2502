@@ -18,4 +18,9 @@
 		DELETE FROM todo_list WHERE idx=#{param1}
 	</delete>
 	
+	<update id="toggle">
+		UPDATE todo_list SET done = #{param2}
+			WHERE idx = #{param1}
+	</update>
+	
 </mapper>
