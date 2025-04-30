@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="kr.co.himedia.dao.TodoDAO">
+
+	<select id="list" resultType="kr.co.himedia.dto.TodoDTO">
+		SELECT * FROM todo_list WHERE id=#{param1} ORDER BY idx DESC
+	</select>
+	
+	<insert id="insert" parameterType="map">
+		INSERT INTO todo_list(id,content,done) 
+		VALUES(#{id},#{content},${done})
+	</insert>
+	
+	<delete id="del">
+		DELETE FROM todo_list WHERE idx=#{param1}
+	</delete>
+</mapper>
