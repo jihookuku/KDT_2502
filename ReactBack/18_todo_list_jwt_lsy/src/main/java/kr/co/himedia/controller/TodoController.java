@@ -38,8 +38,8 @@ public class TodoController {
 		log.info("header : {}",header);
 		
 		result = new HashMap<String, Object>();
-		
-		
+		boolean login = false;
+				
 		String token = header.get("authorization");
 		Map<String, Object> payload = JwtUtils.readToken(token);
 		String loginId = (String) payload.get("id");
@@ -48,7 +48,10 @@ public class TodoController {
 		if (!loginId.equals("") && loginId.equals(params.get("id"))) {
 			List<TodoDTO> list = service.list(params.get("id"));
 			result.put("list", list);
+			login = true;
 		}
+		result.put("loginYN", login);		
+		
 		return result;
 	}
 	

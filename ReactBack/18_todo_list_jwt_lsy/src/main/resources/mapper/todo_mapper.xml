@@ -17,4 +17,5 @@
 	<delete id="del">
 		DELETE FROM todo_list WHERE idx=#{param1}
 	</delete>
+	
 </mapper>
