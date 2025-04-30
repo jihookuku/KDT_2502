@@ -19,7 +19,7 @@
 	</delete>
 	
 	<update id="toggle">
-		UPDATE todo_list SET done = #{param2}
+		UPDATE todo_list SET done = ${param2}
 			WHERE idx = #{param1}
 	</update>
 	
