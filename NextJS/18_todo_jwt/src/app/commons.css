@@ -7,3 +7,32 @@ table, th, td{
 button{
     margin: 5px;
 }
+
+.inputBox{
+    height: 40px;
+    width: 83%;
+    font-size: 20px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid green;
+}
+
+.inputBox:focus{
+    outline: none;
+}
+
+.inputButton{
+    width: 14%;
+    height: 44px;
+    color:green;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid green;
+}
+
+.inputButton:hover{
+    background-color: green;
+    color:white;
+}

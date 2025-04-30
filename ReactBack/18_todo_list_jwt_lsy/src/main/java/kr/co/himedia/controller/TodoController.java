@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import kr.co.himedia.dto.TodoDTO;
 import kr.co.himedia.service.TodoService;
 import kr.co.himedia.util.JwtUtils;
 
+@CrossOrigin
 @RestController
 public class TodoController {
 
@@ -63,11 +65,15 @@ public class TodoController {
 		String token = header.get("authorization");
 		Map<String, Object> payload = JwtUtils.readToken(token);
 		String loginId = (String) payload.get("id");
+		boolean login = false;
 		
 		if (loginId != null && loginId.equals(params.get("id"))) {
 			boolean success = service.insert(params);
 			result.put("success", success);
+			login = true;
 		}
+		result.put("loginYN", login);
+		
 		return result;
 	}
 	
