@@ -5,8 +5,8 @@ import {store} from "@/redux/Store";
 const TodoSlice = createSlice({
     name:'todo',
     initialState:{
-        id: sessionStorage.getItem('id'),
-        token: sessionStorage.getItem('token'),
+        id: typeof window == 'undefined' ? '' : sessionStorage.getItem('id'),
+        token: typeof window == 'undefined' ? '' : sessionStorage.getItem('token'),
         list:[]
     },
     reducers:{

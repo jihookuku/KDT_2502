@@ -36,3 +36,56 @@ button{
     background-color: green;
     color:white;
 }
+
+.item{
+    padding: 15px;
+    border: 1px solid lightgray;
+    margin-top: 5px;
+}
+
+.item:hover{
+    background-color: lightgray;
+}
+
+.checkbox{
+    width: 20px;
+    height: 20px;
+}
+
+.text{
+    display: inline;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+.delete{
+    float: right;
+    color: orange;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.done{
+    text-decoration: line-through;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
