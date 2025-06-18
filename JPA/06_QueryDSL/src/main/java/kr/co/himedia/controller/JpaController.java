@@ -3,6 +3,7 @@ package kr.co.himedia.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.himedia.entity.Employee;
@@ -25,5 +26,27 @@ public class JpaController {
 		return service.findByName(name);
 	}
 	
+	@GetMapping(value="/find/age/{age}")
+	public List<Employee> getByAge(@PathVariable int age){
+		return service.findByAge(age);
+	}
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
