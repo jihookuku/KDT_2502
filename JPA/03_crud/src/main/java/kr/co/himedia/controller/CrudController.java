@@ -35,8 +35,8 @@ public class CrudController {
 	}
 	
 	@GetMapping(value="/get/{id}")	
-	public void getOne(@PathVariable String id) {
-		
+	public Employee getOne(@PathVariable String id) {
+		return service.getOne(id);
 	}
 	
 	@DeleteMapping(value="/del/{id}")
