@@ -43,6 +43,15 @@ public class CustomController {
 		return service.findByAgeAndName(age, name);
 	}
 	
+	@GetMapping(value="/find/nameNemail")
+	public List<Employee> findByNameAndEmail(String name, String email){
+		return service.findByNameAndEmail(name, email);
+	}
+	
+	@GetMapping(value="/find/nameORemail")
+	public List<Employee> nameORemail(String name, String email){
+		return service.findByNameOrEmailOrderByNoDesc(name, email);
+	}
 	
 	
 	
