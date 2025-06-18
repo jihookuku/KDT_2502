@@ -66,8 +66,11 @@ public class CrudService {
 				return employee;						
 		});
 		
-		return emp;	
-		
+		return emp;			
+	}
+	
+	public void del(String id) {		
+		empRepo.deleteById(Integer.parseInt(id));		
 	}
 
 }

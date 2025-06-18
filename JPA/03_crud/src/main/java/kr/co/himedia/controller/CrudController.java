@@ -40,8 +40,9 @@ public class CrudController {
 	}
 	
 	@DeleteMapping(value="/del/{id}")
-	public void del(@PathVariable String id) {
-		
+	public String del(@PathVariable String id) {
+		service.del(id);		
+		return "{\"msg\":\""+id+"번 데이터를 삭제 했습니다.\"}";
 	}
 	
 	@PutMapping(value="/update")
