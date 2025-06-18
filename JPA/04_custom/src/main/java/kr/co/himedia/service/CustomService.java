@@ -30,12 +30,13 @@ public class CustomService {
 		return empRepo.findByAgeAndName(age, name);
 	}
 	
+	//재귀함수 : 스스로를 호출하는 함수, 스스로가 실행되면서 정지 플래그가 없다면 무한루프로 인한 StackOverFlow 가 발생
 	public List<Employee> findByNameAndEmail(String name, String email){
-		return findByNameAndEmail(name, email);
+		return empRepo.findByNameAndEmail(name, email);
 	}
 	
 	public List<Employee> findByNameOrEmailOrderByNoDesc(String name, String email){
-		return findByNameOrEmailOrderByNoDesc(name, email);
+		return empRepo.findByNameOrEmailOrderByNoDesc(name, email);
 	}
 	
 	public List<Employee> saveAll(List<Employee> emps){		
