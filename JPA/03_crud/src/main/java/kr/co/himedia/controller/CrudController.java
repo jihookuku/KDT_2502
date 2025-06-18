@@ -46,8 +46,8 @@ public class CrudController {
 	}
 	
 	@PutMapping(value="/update")
-	public void update() {
-		
+	public Employee update(@RequestBody Employee emp) {
+		return service.saveOrUpdate(emp);
 	}
 	
 	
