@@ -1,5 +1,6 @@
 package kr.co.himedia.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -37,6 +38,15 @@ public class CustomService {
 		return findByNameOrEmailOrderByNoDesc(name, email);
 	}
 	
+	public List<Employee> saveAll(List<Employee> emps){		
+		List<Employee> list = new ArrayList<Employee>();		
+		Iterable<Employee> iter =empRepo.saveAll(emps);		
+		for (Employee employee : iter) {
+			list.add(employee);
+		}				
+		return list;
+		
+	}
 	
 
 }
