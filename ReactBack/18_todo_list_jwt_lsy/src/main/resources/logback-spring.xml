@@ -29,6 +29,29 @@
 			<pattern>${LOG_PATTERN}</pattern> 		
 		</encoder>
 	</appender>	
+	
+	<!-- Appenders :  FILE -->
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">    
+       <!-- 저장 위치 -->
+       <file>/usr/local/tomcat/logs/todo_list.log</file>
+       <!-- 출력 패턴 -->
+       <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+         <pattern>${LOG_PATTERN}</pattern>       
+      </encoder>      
+      <!-- Rolling 정책 --> 
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+         <!-- .gz,.zip 등을 넣으면 자동 일자별 로그파일 압축 --> 
+         <fileNamePattern>/usr/local/tomcat/logs/todo_list.%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+         <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <!-- 파일당 최고 용량 kb, mb, gb -->
+            <maxFileSize>10MB</maxFileSize>
+         </timeBasedFileNamingAndTriggeringPolicy>
+         <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
+         <maxHistory>30</maxHistory>
+      </rollingPolicy>
+    </appender>
+	
+	
 		
 	<!-- SQL LOG 옵션 설정 (쿼리문과 걸린시간, 결과를 보도록 한다.)-->	
 	<!-- 커넥션의 연결과 종료를 로그에 남김 -->
@@ -48,6 +71,24 @@
    	<!-- TRACE > DEBUG > INFO > WARN > FATAL -->
 	<root level="INFO">
 		<appender-ref ref="console"/>
+		<appender-ref ref="file"/>
 	</root>
     
 </configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
