@@ -37,6 +37,12 @@ public class CustomController {
 		return service.findByAgeOrderByNoAsc(age);
 	}
 	
+	@GetMapping(value="/find/nameNage")
+	public List<Employee> findByNameAndAge(String name, int age){
+		logger.info(name+" : "+age);
+		return service.findByAgeAndName(age, name);
+	}
+	
 	
 	
 	
