@@ -32,20 +32,8 @@ public interface EmployeeRepo extends CrudRepository<Employee, Integer> {
 	// 이름이 "KIM", "LEE","GANG" 인 사람의 Employee 정보를 name 기준으로 오름차순 정렬하여 가져오기
 	// SELECT * FROM Employee WHERE name IN('KIM','LEE','GANG') ORDER BY name
 	// 컬렉션 프레임 워크 활용
-	@Query("SELECT * FROM Employee WHERE name IN :names ORDER BY name")
+	@Query("SELECT e FROM Employee e WHERE e.name IN :names ORDER BY e.name")
 	public List<Employee> findByNames(@Param("names") List<String> list);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
