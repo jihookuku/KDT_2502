@@ -32,7 +32,10 @@ public class CustomController {
 		return service.findByName(name);
 	}
 	
-	
+	@GetMapping(value="/find/age/{age}")
+	public List<Employee> findByAge(@PathVariable int age){
+		return service.findByAgeOrderByNoAsc(age);
+	}
 	
 	
 	
