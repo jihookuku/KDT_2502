@@ -31,6 +31,10 @@ public class JpaController {
 		return service.findByAge(age);
 	}
 	
+	@GetMapping(value="/find/nameNemail")
+	public List<Employee> getByNameAndEmail(String name, String email){
+		return service.findByNameAndEmail(name,email);
+	}
 
 }
 

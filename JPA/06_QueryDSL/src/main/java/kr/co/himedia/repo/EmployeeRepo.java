@@ -28,10 +28,17 @@ public class EmployeeRepo {
 	}
 	
 	public List<Employee> findByAge(int age){
-		//SELECR * FROM employee WHRE age = :age ORDER BY no ASC
+		//SELECT * FROM employee WHRE age = :age ORDER BY no ASC
 		QEmployee emp = QEmployee.employee;		
 		return 	factory.selectFrom(emp).where(emp.age.eq(age))
 				.orderBy(emp.no.asc()).fetch();
+	}
+
+	public List<Employee> findByNameAndEmail(String name, String email) {
+		// SELECT * FROM employee WHERE name = :name AND email = :email
+		QEmployee emp = QEmployee.employee;			
+		return factory.selectFrom(emp)
+				.where(emp.name.eq(name).and(emp.email.eq(email))).fetch();
 	}
 	
 	
