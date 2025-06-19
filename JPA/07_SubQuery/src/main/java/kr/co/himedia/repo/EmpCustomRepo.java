@@ -7,5 +7,7 @@ import kr.co.himedia.entity.Emp;
 public interface EmpCustomRepo {
 	
 	List<Emp> findAllByLoc(List<String> param);
+	
+	List<Emp> searchByDeptName(String deptname);
 
 }

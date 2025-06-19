@@ -28,7 +28,8 @@ public class SearchService {
 	}
 
 	public List<Emp> exam2() {
-		// SELECT * FROM emp WHERE deptno IN (SELECT deptno FROM dept WHERE loc IN('LA', 'boston'));
+		// SELECT * FROM emp WHERE deptno IN
+		// (SELECT deptno FROM dept WHERE loc IN('LA', 'boston'));
 		List<String> params = new ArrayList<String>();
 		params.add("LA");
 		params.add("BOSTON");
@@ -36,17 +37,21 @@ public class SearchService {
 	}
 
 	public List<Emp> exam3() {
-		// SELECT * FROM emp WHERE deptno=(SELECT deptno FROM dept WHERE deptname='sales');
-		return null;
+		// SELECT * FROM emp WHERE 
+		// deptno=(SELECT deptno FROM dept WHERE deptname='sales');
+		return empRepo.searchByDeptName("sales");
 	}
 
 	public List<Emp> exam4() {
-		// SELECT * FROM emp WHERE hiredate < (SELECT MIN(hiredate) FROM emp WHERE job='manager') ORDER BY hiredate
+		// SELECT * FROM emp WHERE hiredate < (SELECT MIN(hiredate) 
+		// FROM emp WHERE job='manager') ORDER BY hiredate
 		return null;
 	}
 
 	public List<Dept> exam5() {
-		// SELECT d.deptname, (SELECT COUNT(deptno) FROM emp WHERE deptno = d.deptno) AS cnt FROM dept d;
+		// SELECT d.deptname, 
+		// (SELECT COUNT(deptno) FROM emp WHERE deptno = d.deptno) AS cnt 
+		// FROM dept d;
 		return null;
 	}
 

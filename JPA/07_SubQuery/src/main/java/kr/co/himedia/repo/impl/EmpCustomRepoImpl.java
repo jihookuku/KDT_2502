@@ -31,7 +31,30 @@ public class EmpCustomRepoImpl implements EmpCustomRepo {
 				
 		return factory.selectFrom(emp).where(emp.deptno.in(sub)).fetch();
 	}
+
+	
+	@Override
+	public List<Emp> searchByDeptName(String deptname) {
+		
+		QDept dept = QDept.dept;
+		QEmp emp = QEmp.emp;
+		
+		SubQueryExpression<Integer> sub = JPAExpressions.select(dept.deptno)
+			.from(dept).where(dept.deptname.eq(deptname));
+		
+		return factory.selectFrom(emp).where(emp.deptno.in(sub)).fetch();
+
+	}
 	
 	
 	
 }
+
+
+
+
+
+
+
+
+

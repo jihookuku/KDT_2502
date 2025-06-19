@@ -12,6 +12,7 @@ import kr.co.himedia.entity.Dept;
 import kr.co.himedia.entity.Emp;
 import kr.co.himedia.service.InsertService;
 
+// 패키지 명이나 클래스명 등이 틀리면 난리날 수 있다.
 @RestController
 @RequestMapping("/insert")
 public class InsertController {
