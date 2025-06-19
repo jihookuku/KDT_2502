@@ -49,6 +49,14 @@ public class BlogController {
 	
 	// 댓글쓰기
 	//user_no, idx, text
+	/*POST http://localhost:8080/reply
+		Content-Type: application/json
+		
+		[
+		  {"text": "1번째 댓글", "idx": 3,"user_no": 1},
+		  {"text": "2번째 댓글", "idx": 3,"user_no": 1}
+		]
+	 */
 	@PostMapping(value="reply")
 	public List<Reply> reply(
 			@RequestBody List<Map<String, String>> params){
