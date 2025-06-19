@@ -3,6 +3,7 @@ package kr.co.himedia.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.himedia.entity.Post;
 import kr.co.himedia.entity.User;
 import kr.co.himedia.repo.PostRepo;
 import kr.co.himedia.repo.ReplyRepo;
@@ -17,6 +18,10 @@ public class BlogService {
 	
 	public User join(User user) {
 		return userRepo.save(user);
+	}
+
+	public Post write(Post post) {
+		return postRepo.save(post);
 	}
 
 }
