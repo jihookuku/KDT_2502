@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.himedia.entity.Employee;
@@ -38,7 +39,12 @@ public class JpaController {
 	
 	@GetMapping(value="/find/nameOrEmail")
 	public List<Employee> getByNameOrEmail(String name, String email){
-		return service.findByNameAndEmail(name,email);
+		return service.findByNameOrEmail(name,email);
+	}
+	
+	@GetMapping(value="/find/names")
+	public List<Employee> getByNames(@RequestParam List<String> names){
+		return service.findByNames(names);
 	}
 
 }

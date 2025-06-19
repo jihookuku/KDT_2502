@@ -36,4 +36,9 @@ public class JpaService {
 		return repo.findByNameOrEmail(name, email);
 	}
 
+
+	public List<Employee> findByNames(List<String> names) {
+		return repo.findByNames(names);
+	}
+
 }

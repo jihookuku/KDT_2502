@@ -49,6 +49,12 @@ public class EmployeeRepo {
 				.where(emp.name.eq(name).or(emp.email.eq(email)))
 				.orderBy(emp.no.desc()).fetch();
 	}
+
+	public List<Employee> findByNames(List<String> names) {
+		// SELECT * FROM employee WHERE name IN (...)
+		QEmployee emp = QEmployee.employee;		
+		return factory.selectFrom(emp).where(emp.name.in(names)).fetch();
+	}
 	
 	
 
