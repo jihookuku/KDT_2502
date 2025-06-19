@@ -1,0 +1,22 @@
+package kr.co.himedia.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.co.himedia.entity.User;
+import kr.co.himedia.repo.PostRepo;
+import kr.co.himedia.repo.ReplyRepo;
+import kr.co.himedia.repo.UserRepo;
+
+@Service
+public class BlogService {
+	
+	@Autowired UserRepo userRepo;
+	@Autowired PostRepo postRepo;
+	@Autowired ReplyRepo replyRepo;
+	
+	public User join(User user) {
+		return userRepo.save(user);
+	}
+
+}
