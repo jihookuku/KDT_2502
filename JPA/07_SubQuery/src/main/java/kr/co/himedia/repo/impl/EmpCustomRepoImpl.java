@@ -1,5 +1,6 @@
 package kr.co.himedia.repo.impl;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -44,6 +45,20 @@ public class EmpCustomRepoImpl implements EmpCustomRepo {
 		
 		return factory.selectFrom(emp).where(emp.deptno.in(sub)).fetch();
 
+	}
+
+	@Override
+	public List<Emp> searchByJob(String job) {
+		
+		QEmp emp = QEmp.emp;
+		
+		SubQueryExpression<Date> sub = JPAExpressions.select(emp.hiredate.min())
+			.from(emp).where(emp.job.eq(job));
+		
+		
+		// lt(<), gt(>), loe(<=), goe(>=)
+		return 	factory.selectFrom(emp).where(emp.hiredate.lt(sub))
+				.orderBy(emp.hiredate.asc()).fetch();
 	}
 	
 	

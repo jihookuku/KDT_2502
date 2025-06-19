@@ -45,7 +45,7 @@ public class SearchService {
 	public List<Emp> exam4() {
 		// SELECT * FROM emp WHERE hiredate < (SELECT MIN(hiredate) 
 		// FROM emp WHERE job='manager') ORDER BY hiredate
-		return null;
+		return empRepo.searchByJob("manager");
 	}
 
 	public List<Dept> exam5() {

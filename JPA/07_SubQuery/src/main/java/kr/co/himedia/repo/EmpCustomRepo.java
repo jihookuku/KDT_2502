@@ -9,5 +9,7 @@ public interface EmpCustomRepo {
 	List<Emp> findAllByLoc(List<String> param);
 	
 	List<Emp> searchByDeptName(String deptname);
+	
+	List<Emp> searchByJob(String job);
 
 }
