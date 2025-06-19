@@ -23,6 +23,16 @@ public class Emp {
 	private int deptno;
 	
 	private Date hiredate; // JPA 에서는 str_to_date() 를 지원하지 않는다.
+	
+	private String job;
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
 
 	// 문자열 형태로 들어온 날짜를 java.sql.Date 형태로 변경해 준다.
 	public void setHiredate(String hiredate) {		

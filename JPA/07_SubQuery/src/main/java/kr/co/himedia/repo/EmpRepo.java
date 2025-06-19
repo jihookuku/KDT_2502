@@ -7,4 +7,6 @@ import kr.co.himedia.entity.Emp;
 public interface EmpRepo 
 	extends JpaRepository<Emp, Integer> {
 
+	Emp findByEname(String string);
+
 }

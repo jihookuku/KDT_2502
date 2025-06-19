@@ -6,6 +6,6 @@ import kr.co.himedia.entity.Dept;
 
 // JpaRepository = CrudRepository + 추가기능 
 public interface DeptRepo 
-	extends JpaRepository<Dept, Integer> {
+	extends JpaRepository<Dept, Integer>, DeptCustomRepo {
 
 }

@@ -17,7 +17,7 @@ public class SearchController {
 	
 	// 1. han 의 근무 부서는?
 	@GetMapping(value="/exam/1")
-	public Dept exam1() {
+	public List<Dept> exam1() {
 		return service.exam1();
 	}
 	
