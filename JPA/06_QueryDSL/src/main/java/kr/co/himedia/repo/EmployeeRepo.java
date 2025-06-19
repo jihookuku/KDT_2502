@@ -41,6 +41,15 @@ public class EmployeeRepo {
 				.where(emp.name.eq(name).and(emp.email.eq(email))).fetch();
 	}
 	
+	public List<Employee> findByNameOrEmail(String name, String email){
+		// SELECT * FROM employee WHERE name = :name OR email = :email ORDER BY no DESC
+		QEmployee emp = QEmployee.employee;
+				
+		return factory.selectFrom(emp)
+				.where(emp.name.eq(name).or(emp.email.eq(email)))
+				.orderBy(emp.no.desc()).fetch();
+	}
+	
 	
 
 }
