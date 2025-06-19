@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -82,8 +83,23 @@ public class BlogController {
 		return service.addReply(list);
 	}
 	
-	//회원 리스트
-	
+	//회원 리스트(java.lang.StackOverflowError)
+	// 이 경우 User 안에 Post 가 있어서 Post 를 불러온다.
+	// 그런데 Post 안에 User 가 있이서 User 를 볼러온다.
+	// 이런식으로 순환참조가 이루어지면서 문제가 발생한다.
+	@GetMapping(value="/user/list")
+	public List<User> userList(){
+		
+		// 해결방법 1. 직렬화 무시(자식 요소를 완전히 배제)
+		// 리스트 같은것을 불러올때 유용
+		// 부모 필드에 @JsonIgnore 추가
+		
+		// 해결방법 2. 직렬화를 한방향으로 설정
+		// 부모 필드에 @JsonManagedReference
+		// 자식 필드에 @JosonBackReference
+		
+		return service.userList();
+	}
 	
 	
 	

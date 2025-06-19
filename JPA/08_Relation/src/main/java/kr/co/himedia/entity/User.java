@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class User {
 	
@@ -36,6 +39,8 @@ public class User {
 	@OneToMany(mappedBy = "user",
 			orphanRemoval = true,
 			cascade = CascadeType.ALL)
+	//@JsonIgnore // 해결방법 1
+	@JsonManagedReference
 	private List<Post> posts = new ArrayList<Post>();
 
 	public long getUserNo() {

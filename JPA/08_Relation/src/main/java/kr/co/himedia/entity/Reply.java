@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Reply {
 	
@@ -20,10 +22,12 @@ public class Reply {
 	
 	@ManyToOne
 	@JoinColumn(name="idx")
+	@JsonBackReference
 	private Post post;
 	
 	@ManyToOne
 	@JoinColumn(name="user_no")
+	@JsonBackReference
 	private User user;
 
 	public long getRepleIdx() {

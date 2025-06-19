@@ -16,6 +16,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Post {
 	
@@ -31,10 +35,13 @@ public class Post {
 	private String content;
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	//@JsonIgnore // 해결방법 1
+	@JsonManagedReference
 	private List<Reply> replies = new ArrayList<Reply>();
 	
 	@ManyToOne
 	@JoinColumn(name="user_no")
+	@JsonBackReference
 	private User user;
 
 	public long getIdx() {

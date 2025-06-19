@@ -31,4 +31,8 @@ public class BlogService {
 		return replyRepo.saveAll(list);
 	}
 
+	public List<User> userList() {
+		return userRepo.findAll();
+	}
+
 }
