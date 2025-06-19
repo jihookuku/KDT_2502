@@ -1,5 +1,7 @@
 package kr.co.himedia.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.himedia.entity.Post;
+import kr.co.himedia.entity.Reply;
 import kr.co.himedia.entity.User;
 import kr.co.himedia.service.BlogService;
 
@@ -38,14 +41,38 @@ public class BlogController {
 		// Post 의 userNo 는 User형태이므로 맞춰서 넣어줘야 한다.
 		User user = new User();
 		user.setUserNo(Long.parseLong(param.get("user_no")));		
-		post.setUser(user);
-		
+		post.setUser(user);		
 		
 		return service.write(post);
 	}
 	
 	
 	// 댓글쓰기
+	//user_no, idx, text
+	@PostMapping(value="reply")
+	public List<Reply> reply(
+			@RequestBody List<Map<String, String>> params){
+		
+		List<Reply> list = new ArrayList<Reply>();
+		Reply re = null;
+		
+		for (Map<String, String> map : params) {
+			re = new Reply();
+			re.setText(map.get("text"));
+			
+			User user = new User();
+			user.setUserNo(Long.parseLong(map.get("user_no")));
+			re.setUser(user);
+			
+			Post post = new Post();
+			post.setIdx(Long.parseLong(map.get("idx")));
+			re.setPost(post);
+			
+			list.add(re);			
+		}
+				
+		return service.addReply(list);
+	}
 	
 	//회원 리스트
 	
