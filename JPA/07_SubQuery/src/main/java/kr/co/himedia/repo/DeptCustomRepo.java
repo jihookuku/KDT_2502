@@ -7,5 +7,7 @@ import kr.co.himedia.entity.Dept;
 public interface DeptCustomRepo {
 	
 	List<Dept> findDeptByName(String name);
+	
+	List<Dept> searchAllDept();
 
 }

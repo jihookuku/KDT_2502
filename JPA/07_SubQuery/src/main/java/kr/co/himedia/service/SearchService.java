@@ -52,7 +52,7 @@ public class SearchService {
 		// SELECT d.deptname, 
 		// (SELECT COUNT(deptno) FROM emp WHERE deptno = d.deptno) AS cnt 
 		// FROM dept d;
-		return null;
+		return deptRepo.searchAllDept();
 	}
 
 }

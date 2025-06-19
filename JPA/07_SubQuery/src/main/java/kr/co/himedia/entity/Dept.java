@@ -3,6 +3,7 @@ package kr.co.himedia.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="dept")
@@ -14,6 +15,17 @@ public class Dept {
 	private String deptname;
 	
 	private String loc;
+	
+	@Transient // 사용만 하고 컬럼은 만들고 싶지 않을경우
+	private long cnt;
+
+	public long getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(long cnt) {
+		this.cnt = cnt;
+	}
 
 	public int getDeptno() {
 		return deptno;
