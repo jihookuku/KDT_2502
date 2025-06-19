@@ -1,5 +1,6 @@
 package kr.co.himedia.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +28,25 @@ public class SearchService {
 	}
 
 	public List<Emp> exam2() {
-		//
-		return null;
+		// SELECT * FROM emp WHERE deptno IN (SELECT deptno FROM dept WHERE loc IN('LA', 'boston'));
+		List<String> params = new ArrayList<String>();
+		params.add("LA");
+		params.add("BOSTON");
+		return empRepo.findAllByLoc(params);
 	}
 
 	public List<Emp> exam3() {
-		//
+		// SELECT * FROM emp WHERE deptno=(SELECT deptno FROM dept WHERE deptname='sales');
 		return null;
 	}
 
 	public List<Emp> exam4() {
-		//
+		// SELECT * FROM emp WHERE hiredate < (SELECT MIN(hiredate) FROM emp WHERE job='manager') ORDER BY hiredate
 		return null;
 	}
 
 	public List<Dept> exam5() {
-		//
+		// SELECT d.deptname, (SELECT COUNT(deptno) FROM emp WHERE deptno = d.deptno) AS cnt FROM dept d;
 		return null;
 	}
 
