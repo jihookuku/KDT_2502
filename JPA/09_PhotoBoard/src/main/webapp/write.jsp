@@ -40,11 +40,41 @@
 </body>
 <script>
 
-function fileSelect(input){
-	console.log([input]);
+const photos = [];
+
+async function save(){ // file + text
 	
+	const formData = new FormData();
+	let subject = document.querySelector('input[name="subject"]').value;
+	formData.append('subject',subject);
+	
+	let userName = document.querySelector('input[name="user_name"]').value;
+	formData.append('userName',userName);
+	
+	let content = document.querySelector('textarea[name="content"]').value;
+	formData.append('content',content);
+	
+	for(photo of photos){
+		formData.append('files',photo);
+	}
+	
+	const data = await fetch('./write.do',{
+			method:'POST',
+			header:{},
+			body:formData
+		});
+	
+	let result = await data.json();
+	console.log(result);
+	
+}
+
+
+function fileSelect(input){
+	console.log([input]);	
 	let reader;
 	for(let file of input.files){
+		photos.push(file);
 		reader = new FileReader(); // 파일리더 객체 생성
 		reader.readAsDataURL(file); // file 객체를 읽어서 base64 형태로 인코딩
 		reader.onload = function(e){
@@ -53,9 +83,7 @@ function fileSelect(input){
 			document.querySelector('#prev')
 				.insertAdjacentHTML('beforeend','<img width="100px" src="'+e.target.result+'"/>');			
 		}
-	}
-	
-	
+	}	
 }
 
 
