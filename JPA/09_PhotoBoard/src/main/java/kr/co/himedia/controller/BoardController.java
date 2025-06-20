@@ -73,7 +73,11 @@ public class BoardController {
 		return dto;
 	}
 	
-	
+	@GetMapping(value="/delete")
+	public ModelAndView delete(long idx) {
+		service.delete(idx);			
+		return new ModelAndView("list");
+	}
 	
 	
 	

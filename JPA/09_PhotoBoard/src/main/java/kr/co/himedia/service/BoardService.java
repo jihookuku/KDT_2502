@@ -1,10 +1,12 @@
 package kr.co.himedia.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -79,6 +81,22 @@ public class BoardService {
 
 	public Board detail(long idx) {	
 		return repo.findById(idx).get();		
+	}
+
+	public void delete(long idx) {
+		//1. photo 를 통해 사진이 있는지 확인		
+		List<Photo> list = repo.findById(idx).get().getPhotos();	
+		
+		//2.  데이터 삭제(Cascade 에 의해 자식도 지워짐)
+		repo.deleteById(idx);
+		
+		//3. 사진이 있다면 삭제
+		for (Photo p : list) {
+			File file = new File(root+"/"+p.getNewFileName());
+			boolean success = file.delete();
+			log.info(p.getNewFileName()+" delete : "+success);
+		}	
+		
 	}
 	
 	
