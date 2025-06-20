@@ -62,6 +62,17 @@ public class JoinRepo {
 		
 	}
 	
+	public List<Emp> fetchJoin() {
+		QDept d = QDept.dept;
+		QEmp e = QEmp.emp;	
+		//fetch join 은 join + select 를 동시 수행한다.
+		// 그렇기 때문에 원치 않은 중복이 발생할 수 있어 distinct() 를 사용할것을 권장
+		log.info("fetch join!!!!");
+		return  factory.selectFrom(e).from(e)
+				.join(e.dept,d).distinct().fetchJoin().fetch();	
+	}
+	
+	
 	
 
 }

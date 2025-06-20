@@ -35,9 +35,7 @@ public class JoinController {
 	
 	@GetMapping(value="/fetchJoin")
 	public List<Emp> fetchJoin(){
-		return null;
-	}
-	
-	
+		return service.fetchJoin();
+	}	
 
 }

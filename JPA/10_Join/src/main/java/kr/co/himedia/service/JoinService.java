@@ -24,5 +24,9 @@ public class JoinService {
 	public List<Map<String, Object>> empRightJoinDept() {
 		return repo.empRightJoinDept();
 	}
+	
+	public List<Emp> fetchJoin(){
+		return repo.fetchJoin();
+	}
 
 }
