@@ -27,13 +27,29 @@
 	</table>	
 </body>
 <script>
-
 	listCall(1);
 
 	async function listCall(no){		
 		const data = await fetch('list/'+no);
 		const result = await data.json();
 		console.log(result);
+		
+		let content = result.list.length>0?'':'M<tr><th colspan="7">작성된 게시물이 없습니다.</th></tr>';
+		
+		for(let item of result.list){
+			content += '<tr>';
+			content += '<td>'+item.idx+'</td>';
+			content += '<td>'+item.photos.length+'</td>';
+			content += '<td>'+item.subject+'</td>';
+			content += '<td>'+item.userName+'</td>';
+			content += '<td>'+item.bhit+'</td>';
+			content += '<td>'+item.reg_date+'</td>';
+			content += '<td><a href="./delete?idx='+item.idx+'">삭제</a></td>';
+			content += '</tr>';
+		}
+		
+		document.querySelector('#list').innerHTML = content;		
+		
 	}
 </script>
 </html>
