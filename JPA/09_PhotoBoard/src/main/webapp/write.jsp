@@ -26,7 +26,7 @@
 		<tr>
 			<th>사진</th>
 			<td>
-				<input type="file" name="files" />
+				<input type="file" name="files" onchange="fileSelect(this)"/>
 				<div id="prev"></div>
 			</td>
 		</tr>
@@ -37,8 +37,38 @@
 			</th>
 		</tr>
 	</table>
-	
-	
 </body>
-<script></script>
+<script>
+
+function fileSelect(input){
+	console.log([input]);
+	
+	let reader;
+	for(let file of input.files){
+		reader = new FileReader(); // 파일리더 객체 생성
+		reader.readAsDataURL(file); // file 객체를 읽어서 base64 형태로 인코딩
+		reader.onload = function(e){
+			console.log(e);
+			// 대상 요소의 가장 마지막 자식 요소로 추가
+			document.querySelector('#prev')
+				.insertAdjacentHTML('beforeend','<img width="100px" src="'+e.target.result+'"/>');			
+		}
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
 </html>
