@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/common.css" type="text/css">
+<link rel="icon" href="img/favicon.ico">
 <style></style>
 </head>
 <body>
@@ -34,12 +35,14 @@
 		const result = await data.json();
 		console.log(result);
 		
-		let content = result.list.length>0?'':'M<tr><th colspan="7">작성된 게시물이 없습니다.</th></tr>';
+		let content = result.list.length>0?'':'<tr><th colspan="7">작성된 게시물이 없습니다.</th></tr>';
 		
 		for(let item of result.list){
 			content += '<tr>';
 			content += '<td>'+item.idx+'</td>';
-			content += '<td>'+item.photos.length+'</td>';
+			content += '<td>';
+			content += '<img src="img/'+(item.photos.length>0 ? 'image.png':'noimage.png')+'"/>';
+			content += '</td>';
 			content += '<td>'+item.subject+'</td>';
 			content += '<td>'+item.userName+'</td>';
 			content += '<td>'+item.bhit+'</td>';
