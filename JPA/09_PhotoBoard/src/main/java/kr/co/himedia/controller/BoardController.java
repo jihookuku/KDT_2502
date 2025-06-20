@@ -52,7 +52,8 @@ public class BoardController {
 		log.info(dto.getUserName());
 		log.info(dto.getContent());
 		log.info("files : "+files.length);
-				
+		long idx = service.write(files,dto);
+		result.put("idx", idx);		
 		return result;
 	}
 	

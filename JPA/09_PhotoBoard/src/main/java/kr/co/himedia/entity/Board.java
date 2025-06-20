@@ -1,6 +1,7 @@
 package kr.co.himedia.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -47,7 +48,14 @@ public class Board {
 	private LocalDate reg_date;
 	
 	@OneToMany(mappedBy = "bbs", cascade = CascadeType.ALL)
-	private List<Photo> photos;
+	private List<Photo> photos = new ArrayList<Photo>();
+	
+	// Photo 에 데이터를 넣으려고 하면 PhotoRepo 를 작성해야 한다.
+	// 하지만 Board 안의 photos 에 직접 데이터를 넣으면 한번에 처리 가능 하다.
+	public void addPhoto(Photo photo) {
+		this.photos.add(photo); // 이 엔티티에 포토의 내용을 넣어주고
+		photo.setBbs(this); // 자식요소 역시도 부모를 갖을 수 있도록 현재 엔티티를 넣어준다.
+	}
 
 }
 
