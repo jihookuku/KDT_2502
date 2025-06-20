@@ -41,7 +41,7 @@ public class Board {
 	private String content;
 	
 	@Column(name="b_hit")
-	private long bHit;
+	private long bHit = 0;
 	
 	@CreationTimestamp // 테이블 생성시currdate 를 추가
 	private LocalDate reg_date;

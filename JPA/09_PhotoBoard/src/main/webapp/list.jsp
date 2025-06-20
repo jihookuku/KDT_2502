@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/common.css" type="text/css">
 <style></style>
 </head>
 <body>
@@ -23,9 +24,33 @@
 		<tbody id="list">
 		
 		</tbody>
-	</table>
-	
-	
+	</table>	
 </body>
-<script></script>
+<script>
+
+	listCall(1);
+
+	async function listCall(no){		
+		const data = await fetch('list/'+no);
+		const result = await data.json();
+		console.log(result);
+	}
+</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

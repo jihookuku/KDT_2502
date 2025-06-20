@@ -1,6 +1,9 @@
 package kr.co.himedia.controller;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +27,23 @@ public class BoardController {
 		mav.setViewName("list");		
 		return mav;
 	}
+	
+	@GetMapping(value="/list/{no}")
+	public Map<String, Object> list(@PathVariable int no){
+		log.info("page : "+no);		
+		return service.list(no);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }
