@@ -64,8 +64,10 @@ async function save(){ // file + text
 			body:formData
 		});
 	
-	let result = await data.json();
-	console.log(result);
+	// result.idx == {idx}
+	let {idx} = await data.json();
+	console.log(idx);
+	location.href = './detail.go?idx='+idx;
 	
 }
 

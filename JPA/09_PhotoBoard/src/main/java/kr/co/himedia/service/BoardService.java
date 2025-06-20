@@ -76,6 +76,10 @@ public class BoardService {
 		photo.setOriFileName(ori_filename);
 		return photo;		
 	}
+
+	public Board detail(long idx) {	
+		return repo.findById(idx).get();		
+	}
 	
 	
 	

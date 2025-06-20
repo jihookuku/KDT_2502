@@ -43,7 +43,7 @@
 			content += '<th>';
 			content += '<img class="icon" src="img/'+(item.img>0 ? 'image.png':'noimage.png')+'"/>';
 			content += '</th>';
-			content += '<td>'+item.subject+'</td>';
+			content += '<td><a href="detail.go?idx='+item.idx+'">'+item.subject+'</a></td>';
 			content += '<td>'+item.userName+'</td>';
 			content += '<td>'+item.bhit+'</td>';
 			content += '<td>'+item.reg_date+'</td>';

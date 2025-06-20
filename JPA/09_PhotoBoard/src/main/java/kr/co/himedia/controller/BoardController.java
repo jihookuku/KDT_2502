@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.himedia.dto.BoardDTO;
 import kr.co.himedia.entity.Board;
 import kr.co.himedia.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,11 @@ public class BoardController {
 	}
 	
 	@GetMapping(value="/{page}.go")
-	public ModelAndView move(@PathVariable String page) {		
+	public ModelAndView move(@PathVariable String page, String idx) {		
 		ModelAndView mav = new ModelAndView(page);
+		if(idx != null) {
+			mav.addObject("idx", idx);
+		}
 		return mav;
 	}
 		
@@ -57,7 +61,16 @@ public class BoardController {
 		return result;
 	}
 	
-	
+	@GetMapping(value="/detail.do")
+	public BoardDTO detail(long idx){		
+		BoardDTO dto = new BoardDTO();
+		Board board = service.detail(idx);
+		dto.setIdx(board.getIdx());
+		dto.setSubject(board.getSubject());
+		dto.setContent(board.getContent());
+		dto.setPhotos(board.getPhotos());		
+		return dto;
+	}
 	
 	
 	
@@ -68,3 +81,15 @@ public class BoardController {
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
