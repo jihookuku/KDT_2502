@@ -68,7 +68,8 @@ public class BoardController {
 		dto.setIdx(board.getIdx());
 		dto.setSubject(board.getSubject());
 		dto.setContent(board.getContent());
-		dto.setPhotos(board.getPhotos());		
+		dto.setPhotos(board.getPhotos());	
+		dto.setUserName(board.getUserName());
 		return dto;
 	}
 	

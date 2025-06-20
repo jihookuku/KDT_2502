@@ -12,15 +12,15 @@
 		<table>
 		<tr>
 			<th>제목</th>
-			<td></td>
+			<td id="subject"></td>
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td></td>
+			<td id="userName"></td>
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td></td>
+			<td id="content"></td>
 		</tr>
 		<tr>
 			<th>사진</th>
@@ -47,6 +47,19 @@
 		 const data = await fetch('./detail.do?idx='+no);
 		 const json = await data.json();
 		 console.log(json);
+		 
+		 document.getElementById('subject').innerHTML = json.subject;
+		 document.getElementById('userName').innerHTML = json.userName;
+		 document.getElementById('content').innerHTML = json.content;
+		 
+		 if(json.photos.length>0){
+			 content = '';
+			 for(photo of json.photos){
+				 content+='<img src="/photo/'+photo.newFileName+'" alt="'+photo.oriFileName+'"/>'
+			 }
+			 document.getElementById('prev').innerHTML = content;
+		 } 
+		 
 	 }
 	
 	
