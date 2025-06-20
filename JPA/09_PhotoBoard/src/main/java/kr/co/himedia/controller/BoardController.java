@@ -28,6 +28,14 @@ public class BoardController {
 		return mav;
 	}
 	
+	@GetMapping(value="/{page}.go")
+	public ModelAndView move(@PathVariable String page) {		
+		ModelAndView mav = new ModelAndView(page);
+		return mav;
+	}
+	
+	
+	
 	@GetMapping(value="/list/{no}")
 	public Map<String, Object> list(@PathVariable int no){
 		log.info("page : "+no);		

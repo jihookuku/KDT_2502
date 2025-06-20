@@ -9,7 +9,7 @@
 <style></style>
 </head>
 <body>
-	<button>글쓰기</button>
+	<button onclick="location.href='write.go'">글쓰기</button>
 	<table>
 		<thead>
 			<tr>
@@ -40,9 +40,9 @@
 		for(let item of result.list){
 			content += '<tr>';
 			content += '<td>'+item.idx+'</td>';
-			content += '<td>';
-			content += '<img src="img/'+(item.photos.length>0 ? 'image.png':'noimage.png')+'"/>';
-			content += '</td>';
+			content += '<th>';
+			content += '<img class="icon" src="img/'+(item.photos.length>0 ? 'image.png':'noimage.png')+'"/>';
+			content += '</th>';
 			content += '<td>'+item.subject+'</td>';
 			content += '<td>'+item.userName+'</td>';
 			content += '<td>'+item.bhit+'</td>';

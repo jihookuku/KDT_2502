@@ -12,3 +12,22 @@ th, td{
 button{
 	margin: 5px;
 }
+
+.icon{
+	width: 25px;
+}
+
+input[type="text"]{
+	width:99%
+}
+
+textarea{
+	resize: none;
+	width : 99%;
+	height:150px;
+}
+
+#prev{
+	width:50px;
+}
+
