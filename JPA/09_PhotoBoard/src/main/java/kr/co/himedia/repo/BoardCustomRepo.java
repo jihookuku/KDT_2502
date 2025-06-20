@@ -2,11 +2,11 @@ package kr.co.himedia.repo;
 
 import java.util.List;
 
-import kr.co.himedia.entity.Board;
+import kr.co.himedia.dto.BoardDTO;
 
 public interface BoardCustomRepo {
 	
-	List<Board> searchListByPage(int offset,int pageForNum);
+	List<BoardDTO> searchListByPage(int offset,int pageForNum);
 	
 
 }

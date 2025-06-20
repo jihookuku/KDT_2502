@@ -41,7 +41,7 @@
 			content += '<tr>';
 			content += '<td>'+item.idx+'</td>';
 			content += '<th>';
-			content += '<img class="icon" src="img/'+(item.photos.length>0 ? 'image.png':'noimage.png')+'"/>';
+			content += '<img class="icon" src="img/'+(item.img>0 ? 'image.png':'noimage.png')+'"/>';
 			content += '</th>';
 			content += '<td>'+item.subject+'</td>';
 			content += '<td>'+item.userName+'</td>';

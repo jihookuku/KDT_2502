@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.himedia.dto.BoardDTO;
 import kr.co.himedia.entity.Board;
 import kr.co.himedia.entity.Photo;
 import kr.co.himedia.repo.BoardRepo;
@@ -33,7 +34,7 @@ public class BoardService {
 		int pageForNum = 20;
 		int offset = (no-1)*pageForNum;
 		
-		List<Board> list=repo.searchListByPage(offset,pageForNum);
+		List<BoardDTO> list=repo.searchListByPage(offset,pageForNum);
 		log.info("list : "+list);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
