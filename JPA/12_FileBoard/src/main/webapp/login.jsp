@@ -20,13 +20,22 @@
 				<td><input type="password" name="pw"/></td>
 			</tr>
 			<tr>
-				<th>
+				<th colspan="2">
 					<button>login</button>
-					<input type="text" value="회원가입"/>
+					<button type="button">회원가입</button>
 				</th>
 			</tr>
 		</table>	
 	</form>
 </body>
-<script></script>
+<script>
+	const msg = "${msg}";
+	if(msg != ""){
+		alert(msg);
+	}
+
+</script>
 </html>
+
+
+

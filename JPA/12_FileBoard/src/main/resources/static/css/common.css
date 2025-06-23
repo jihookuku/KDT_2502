@@ -58,7 +58,7 @@ button:hover {
   box-shadow: 0 2px 6px rgba(255, 144, 160, 0.3);
 }
 
-input[type="text"], textarea {
+input[type="text"], textarea, input[type="password"] {
   width: 98%;
   padding: 10px 14px;
   font-size: 1rem;
