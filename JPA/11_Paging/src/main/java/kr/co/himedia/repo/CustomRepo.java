@@ -9,8 +9,11 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kr.co.himedia.entity.Emp;
+<<<<<<< HEAD
 import kr.co.himedia.entity.QDept;
 import kr.co.himedia.entity.QEmp;
+=======
+>>>>>>> 75d46c29b3f0a94dd4b31831caa87efbf663e9ad
 import lombok.extern.slf4j.Slf4j;
 
 @Repository
@@ -18,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomRepo {	
 
 	private final JPAQueryFactory factory;
-	
+
 	QEmp e = QEmp.emp;
 	QDept d = QDept.dept;
 		
@@ -48,10 +51,22 @@ public class CustomRepo {
 		
 		
 		
+=======
+	public List<Emp> join(int offset, int limit) {
+		return null;
+	}
+
+	public List<Emp> fetchJoin(int offset, int limit) {
+		return null;
+	}
+
+	public List<Emp> fetchJoin2(int offset, int limit) {
+>>>>>>> 75d46c29b3f0a94dd4b31831caa87efbf663e9ad
 		return null;
 	}
 
 }
+<<<<<<< HEAD
 
 
 
@@ -62,3 +77,5 @@ public class CustomRepo {
 
 
 
+=======
+>>>>>>> 75d46c29b3f0a94dd4b31831caa87efbf663e9ad
