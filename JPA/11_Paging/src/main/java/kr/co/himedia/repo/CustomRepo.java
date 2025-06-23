@@ -43,8 +43,22 @@ public class CustomRepo {
 
 	public List<Emp> fetchJoin2(int offset, int limit) {		
 		// pk 인 empno 를 먼저 추출
-		List<Integer> empnos = factory.select(e.empno).from(e).orderBy(e.empno.asc()).offset(offset).limit(limit).fetch();	
-		return null;
+		List<Integer> empnos = factory.select(e.empno).from(e).orderBy(e.empno.asc())
+				.offset(offset).limit(limit).fetch();			
+		
+		// where 조건에 위에서 추출한 pk 정보를 넣음으로써 메모리에 올라갈 정보가 적어진다.
+		// 쿼리는 2번 날리지만 불필요한 쿼리가 아니기에 문제되지 않는다.
+		return  factory.selectFrom(e).join(e.dept,d)
+				.distinct().fetchJoin().where(e.empno.in(empnos)).fetch();
 	}
 	
 }
+
+
+
+
+
+
+
+
+
