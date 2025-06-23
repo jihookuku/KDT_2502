@@ -9,11 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kr.co.himedia.entity.Emp;
-<<<<<<< HEAD
 import kr.co.himedia.entity.QDept;
 import kr.co.himedia.entity.QEmp;
-=======
->>>>>>> 75d46c29b3f0a94dd4b31831caa87efbf663e9ad
 import lombok.extern.slf4j.Slf4j;
 
 @Repository
@@ -44,38 +41,10 @@ public class CustomRepo {
 	}
 	
 
-	public List<Emp> fetchJoin2(int offset, int limit) {
-		
+	public List<Emp> fetchJoin2(int offset, int limit) {		
 		// pk 인 empno 를 먼저 추출
-		List<Integer> empnos = factory.select(e.empno).from(e).orderBy(e.empno.asc()).offset(offset).limit(limit).fetch();
-		
-		
-		
-=======
-	public List<Emp> join(int offset, int limit) {
+		List<Integer> empnos = factory.select(e.empno).from(e).orderBy(e.empno.asc()).offset(offset).limit(limit).fetch();	
 		return null;
 	}
-
-	public List<Emp> fetchJoin(int offset, int limit) {
-		return null;
-	}
-
-	public List<Emp> fetchJoin2(int offset, int limit) {
->>>>>>> 75d46c29b3f0a94dd4b31831caa87efbf663e9ad
-		return null;
-	}
-
+	
 }
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-=======
->>>>>>> 75d46c29b3f0a94dd4b31831caa87efbf663e9ad
