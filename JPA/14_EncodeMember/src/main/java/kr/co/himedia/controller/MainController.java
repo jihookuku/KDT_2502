@@ -3,7 +3,10 @@ package kr.co.himedia.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,16 +46,30 @@ public class MainController {
 	
 	@PostMapping(value="/join.do")
 	public String join(Member dto) {		
-		String page = "join";
-		
+		String page = "join";		
 		log.info(dto.getId());
 		log.info(dto.getPw());
-		log.info(dto.getName());
-		
+		log.info(dto.getName());		
 		boolean success = service.join(dto);
 		
 		if(success) {
 			page = "login";
+		}
+		
+		return page;
+	}
+	
+	@PostMapping(value="/login.do")
+	public String login(Model model, String id, String pw, HttpSession session) {
+		
+		String page = "login";
+		log.info(id+"/"+pw);
+		boolean success = service.login(id,pw);
+		if(success) {
+			session.setAttribute("loginId", id);
+			page = "list";
+		}else {
+			model.addAttribute("msg", "아이디 또는 비밀번호를 확인하세요!");
 		}
 		
 		return page;

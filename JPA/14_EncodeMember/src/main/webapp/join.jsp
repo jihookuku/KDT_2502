@@ -49,7 +49,7 @@
 					<button>회원가입</button>	
 				</th>
 			</tr>
-		</table>
+		</table>		
 	</form>
 </body>
 <script>

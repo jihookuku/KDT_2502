@@ -37,6 +37,21 @@ public class MainService {
 		return member != null;
 	}
 
+	public boolean login(String id, String pw) {
+		
+		// 1. 해당 id 의 정보를 가져온다.(null 로 올 수 있다.)
+		Member member = memRepo.findById(id).orElse(null);
+		
+		if(member == null) {
+			return false;
+		}
+		
+		// 2. 암호화된 비밀번호 추출
+		String hash = member.getPw();
+		// 3. 가져온 비밀번호와 matches 로 비교
+		return encoder.matches(pw, hash);
+	}
+
 }
 
 

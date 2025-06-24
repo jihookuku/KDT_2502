@@ -28,7 +28,7 @@
 	</table>	
 </body>
 <script>
-	listCall(1);
+	//listCall(1);
 
 	async function listCall(no){		
 		const data = await fetch('list/'+no);
