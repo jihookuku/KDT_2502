@@ -75,6 +75,14 @@ public class MainController {
 		return page;
 	}
 	
+	@GetMapping(value="/list/{page}")
+	@ResponseBody
+	public Map<String, Object>list(@PathVariable int page){
+		int limit = 5;
+		int offset = (page-1)*limit;		
+		return service.list(limit,offset);
+	}
+	
 
 }
 

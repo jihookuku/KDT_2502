@@ -14,7 +14,6 @@
 		<thead>
 			<tr>
 				<th>🔢 번호</th>
-				<th>🖼 이미지</th>
 				<th>✒ 제목</th>
 				<th>👩 작성자</th>
 				<th>🔍 조회수</th>
@@ -28,7 +27,7 @@
 	</table>	
 </body>
 <script>
-	//listCall(1);
+	listCall(1);
 
 	async function listCall(no){		
 		const data = await fetch('list/'+no);
@@ -37,14 +36,11 @@
 		
 		console.log(result.list[0]);
 		
-		let content = result.list.length>0?'':'<tr><th colspan="7">작성된 게시물이 없습니다.</th></tr>';
+		let content = result.list.length>0?'':'<tr><th colspan="6">작성된 게시물이 없습니다.</th></tr>';
 		
 		for(let item of result.list){
 			content += '<tr>';
 			content += '<td>'+item.idx+'</td>';
-			content += '<th>';
-			content += '<img class="icon" src="resources/img/'+(item.img>0 ? 'image.png':'noimage.png')+'"/>';
-			content += '</th>';
 			content += '<td><a href="detail.go?idx='+item.idx+'">'+item.subject+'</a></td>';
 			content += '<td>'+item.userName+'</td>';
 			content += '<td>'+item.bhit+'</td>';

@@ -22,6 +22,8 @@ public class Board {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idx;
 	
+	private String subject;
+	
 	@Column(name="user_name")
 	private String userName;
 	

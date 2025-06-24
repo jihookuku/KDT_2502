@@ -1,8 +1,13 @@
 package kr.co.himedia.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.co.himedia.entity.Board;
 import kr.co.himedia.entity.Member;
 import kr.co.himedia.repo.BoardRepo;
 import kr.co.himedia.repo.MemberRepo;
@@ -15,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MainService {
 	
 	private final MemberRepo memRepo;
-	private final BoardRepo bbsRespo;
+	private final BoardRepo bbsRepo;
 	private final PasswordEncoder encoder;
 	
 	public boolean overlay(String id) {
@@ -50,6 +55,13 @@ public class MainService {
 		String hash = member.getPw();
 		// 3. 가져온 비밀번호와 matches 로 비교
 		return encoder.matches(pw, hash);
+	}
+
+	public Map<String, Object> list(int limit, int offset) {		
+		List<Board> list = bbsRepo.searchAll(limit,offset);	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		return map;
 	}
 
 }
