@@ -6,8 +6,10 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.himedia.entity.Member;
 import kr.co.himedia.service.MainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,8 +41,45 @@ public class MainController {
 		return map;
 	}
 	
+	@PostMapping(value="/join.do")
+	public String join(Member dto) {		
+		String page = "join";
+		
+		log.info(dto.getId());
+		log.info(dto.getPw());
+		log.info(dto.getName());
+		
+		boolean success = service.join(dto);
+		
+		if(success) {
+			page = "login";
+		}
+		
+		return page;
+	}
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
