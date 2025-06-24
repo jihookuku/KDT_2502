@@ -22,7 +22,7 @@
 			<tr>
 				<th colspan="2">
 					<button>login</button>
-					<button type="button">회원가입</button>
+					<button type="button" onclick="location.href='join.go'">회원가입</button>
 				</th>
 			</tr>
 		</table>	
