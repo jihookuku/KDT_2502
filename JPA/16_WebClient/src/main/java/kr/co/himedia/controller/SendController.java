@@ -1,5 +1,6 @@
 package kr.co.himedia.controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -24,12 +25,14 @@ public class SendController {
 		return service.getSend(msg);
 	}
 	
+	//post  방식으로 보낼것이며, Header로 메시지를 전달할 예정이다.
 	@GetMapping(value="/post/send/{cnt}")
-	public Map<String, Object> postSend(@PathVariable int cnt){
+	public ArrayList<Map<String, String>> 
+		postSend(@PathVariable int cnt){
 		logger.info("send param : "+cnt);
-		return null;
+		return service.postSend(cnt);
 	}
-	
+		
 	@GetMapping(value="/get/flux")
 	public Map<String, Object> flux(){
 		return null;

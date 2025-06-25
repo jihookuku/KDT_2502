@@ -1,11 +1,14 @@
 package kr.co.himedia.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.BodyInserters.FormInserter;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import reactor.core.publisher.Mono;
@@ -33,6 +36,30 @@ public class ApiService {
 		Map<String, Object> map = mono.block();
 		logger.info("result : "+map);		
 		return map;
+	}
+
+	
+	public ArrayList<Map<String, String>> postSend(int cnt) {
+		
+		WebClient client = WebClient.create("http://localhost:8080");
+		
+		//post 방식에서는 보내고 싶은 파라메터를 바디에 담아서 보내야 한다.
+		FormInserter<String> form = BodyInserters.fromFormData("cnt", String.valueOf(cnt));
+		//MultiValueMap : 키가 겹치면 한 키에 여러값을 담는 자료구조(Spring 거임)
+		//form.with("name", "kim"); // 추가 파라메터를 넣고 싶은 경우
+		
+		Mono<ArrayList> mono = client.post().uri("/list/return")
+				.header("authorization", "YOUR_API_KEY")
+				.body(form).retrieve().bodyToMono(ArrayList.class);
+		
+		//block() 은 비동기 방식이므로 많은 요청 처리시 속도 지연이 발생할 수 있다.
+		// 그래서 아래 방식을 추천 한다.
+		//ArrayList<Map<String, String>> resp = mono.block();
+		
+		ArrayList<Map<String, String>> resp = mono.flux()
+				.toStream().findFirst().get();		
+
+		return resp;
 	}
 
 }
