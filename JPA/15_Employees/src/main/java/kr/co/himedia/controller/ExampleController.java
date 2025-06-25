@@ -23,8 +23,10 @@ public class ExampleController {
 
 
 	//여러 팀에 배정된 사원의 이름을 가져 오시오
-	//@GetMapping("/exam/2")
-
+	@GetMapping("/exam/2")
+	public List<String> exam2(){
+		return service.exam2();
+	}
 		
 	// 그럼 각 인원이 어떤 팀에서 어떤 팀으로 이동했는지 알아보자
 	//@GetMapping("/exam/3")

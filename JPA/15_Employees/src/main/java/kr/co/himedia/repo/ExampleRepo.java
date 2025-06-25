@@ -58,12 +58,26 @@ public class ExampleRepo {
 		
 		return list;
 	}
-	
-	
-	
-
-	//여러 팀에 배정된 사원의 이름을 가져 오시오
 		
+
+	/*여러 팀을 거쳐간 사원의 이름을 가져 오시오
+	SELECT 
+		CONCAT(e.first_name,' ,',e.last_name) AS name
+		,d.cnt
+		FROM (select de.emp_no, COUNT(de.emp_no) AS cnt FROM dept_emp de 
+			GROUP BY emp_no HAVING cnt > 1) d JOIN employees e ON d.emp_no = e.emp_no;
+	*/	
+	public List<String> exam2(){
+		// JPA 는 FROM 절에 들어가는 서브쿼리를 처리하지 못한다.
+		// 이런 경우는 먼저 FROM 절의 서브쿼리로 데이터를 추출 한다.
+		List<Integer> subFrom = factory.select(de.emp.empNo).from(de)
+			.groupBy(de.emp.empNo).having(de.dept.deptNo.count().gt(1)).fetch();
+		
+		// 이후 메인 쿼리에 활용하는 방법으로 사용해야 한다.(즉 서브쿼리 실행 후 결과물을 메인쿼리에 적용시키는 방향으로...)
+		return factory.select(e.firstName.concat(e.lastName)).from(e).where(e.empNo.in(subFrom)).fetch();		
+	}
+	
+	
 	// 그럼 각 인원이 어떤 팀에서 어떤 팀으로 이동했는지 알아보자
 		
 	// 위 내용을 join 활용해서도 풀어보자!
@@ -74,3 +88,19 @@ public class ExampleRepo {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,4 +18,8 @@ public class ExampleService {
 		return repo.exam1();
 	}
 
+	public List<String> exam2() {
+		return repo.exam2();
+	}
+
 }
