@@ -30,4 +30,8 @@ public class ExampleService {
 		return repo.exam4();
 	}
 
+	public List<Map<String, Object>> exam5() {
+		return repo.exam5();
+	}
+
 }

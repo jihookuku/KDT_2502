@@ -158,7 +158,42 @@ public class ExampleRepo {
 	
 	
 		
-	// 현 팀장들의 이름, 성별, 입사일, 직책, 직책 기간
+	/* 현 팀장들의 이름, 성별, 입사일, 직책, 직책 기간
+	select 	
+		concat(e.first_name,', ',e.last_name) as name,
+		e.gender,
+		e.hire_date,
+		dm.from_date,
+		(select t.title from titles t where t.to_date = '9999-01-01' and t.emp_no = dm.emp_no) as title,
+		dm.to_date
+	from dept_manager dm join employees e on dm.emp_no = e.emp_no
+	where to_date = '9999-01-01';		
+	*/	
+	public List<Map<String, Object>>exam5(){
+		
+		LocalDate target = LocalDate.of(9999, 1, 1);
+		
+		SubQueryExpression<String> title = JPAExpressions.select(t.key.title).from(t)
+				.where(t.toDate.eq(target).and(t.emp.empNo.eq(dm.emp.empNo)));
+		
+		List<Tuple> tuples=factory.select(e.firstName,e.lastName,e.gender,dm.fromDate,dm.toDate,title)
+			.from(dm).join(dm.emp,e).where(dm.toDate.eq(target)).fetch();
+		
+		List<Map<String, Object>>list = new ArrayList<Map<String,Object>>();
+		Map<String, Object> map = null;
+		for (Tuple tuple : tuples) {
+			map = new HashMap<String, Object>();
+			map.put("name",tuple.get(e.firstName)+", "+tuple.get(e.lastName));
+			map.put("gender", tuple.get(e.gender));
+			map.put("title", tuple.get(title));
+			map.put("fromDate", tuple.get(dm.fromDate));
+			map.put("toDate", tuple.get(dm.toDate));
+			list.add(map);
+		}				
+		return list;
+		
+	}
+		
 		
 	// 사원들의 사번, 이름, 현재 직책과 급여
 
