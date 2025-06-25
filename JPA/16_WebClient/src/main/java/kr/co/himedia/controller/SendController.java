@@ -1,6 +1,8 @@
 package kr.co.himedia.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -32,12 +34,15 @@ public class SendController {
 		logger.info("send param : "+cnt);
 		return service.postSend(cnt);
 	}
-		
+
+	// mono 방식은  1:1 의 동기 통신 상황에 적합
+	// flux 방식은 1:n 의 비동기 통신상황에 적합
 	@GetMapping(value="/get/flux")
-	public Map<String, Object> flux(){
-		return null;
+	public List<HashMap<String, Object>> flux(){
+		return service.flux();
 	}
 	
+
 	
 
 }

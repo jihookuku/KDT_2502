@@ -2,7 +2,9 @@ package kr.co.himedia.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +62,28 @@ public class ApiService {
 				.toStream().findFirst().get();		
 
 		return resp;
+	}
+
+
+	public List<HashMap<String, Object>> flux() {
+		
+		WebClient client = WebClient.create("http://localhost:8080");
+		//JSON 형태로 전달
+		Map<String, Object> json = new HashMap<String, Object>();
+		json.put("age", 40);
+		json.put("name", "Jhone");
+		json.put("married", false);
+		json.put("socres", new int[] {30,40,50,60,70,80,90,100});
+		logger.info("json : "+json);
+
+		List<HashMap<String, Object>> list =client.post()
+				.uri("/flux/return")
+				.bodyValue(json) //requestBody 로 받게 된다.
+				.retrieve()
+				.bodyToFlux(HashMap.class) // flux 형태로 받을 예정
+				.toStream().collect(Collectors.toList()); // List 형태로 모아서 반환
+				
+		return list;
 	}
 
 }

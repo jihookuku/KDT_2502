@@ -2,6 +2,7 @@ package kr.co.himedia.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,9 +42,52 @@ public class ReceiveController {
 			map.put("name", "kim");
 			map.put("salary", (i*1000000)+"");
 			list.add(map);
-		}
-				
+		}				
+		return list;
+	}
+	
+	
+	@PostMapping(value="/flux/return")
+	public List<HashMap<String, Object>> fluxReturn(
+			@RequestBody Map<String, Object> params){
+		
+		logger.info("json : {}",params);
+		
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
+		HashMap<String, Object> map = null;
+		for (int i = 1; i <= 10; i++) {
+			map = new HashMap<String, Object>();
+			map.put("no", i);
+			map.put("name", "kim");
+			map.put("salary", i*1000000);
+			list.add(map);
+		}				
 		return list;
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
