@@ -90,6 +90,7 @@ public class ExampleRepo {
 		from dept_emp de where de.emp_no in (
 			select de.emp_no from dept_emp de group by emp_no having count(de.dept_no)>1)
 		order by de.emp_no, de.from_date asc;
+		473 msec
 	*/	
 	public List<Map<String, Object>> exam3(){
 		
@@ -113,10 +114,49 @@ public class ExampleRepo {
 		}				
 		return list;
 	}
+		
+	
+	/* 위 내용을 join 활용해서도 풀어보자!
+	SELECT 
+		concat(e.first_name,', ',e.last_name) AS name
+		,d.dept_name as team
+		,de.from_date
+		,de.to_date
+	FROM departments d RIGHT JOIN dept_emp de ON d.dept_no = de.dept_no
+	JOIN employees e ON e.emp_no = de.emp_no
+	WHERE de.emp_no in (
+		SELECT de.emp_no FROM dept_emp de GROUP BY emp_no HAVING COUNT(de.dept_no)>1
+	) ORDER BY de.emp_no, de.from_date;	
+	*/
+	public List<Map<String, Object>>exam4(){// 771 msec
+		
+		SubQueryExpression<Integer> condition = JPAExpressions.select(de.emp.empNo).from(de).groupBy(de.emp.empNo)
+				.having(de.dept.deptNo.count().gt(1));
+		
+		List<Tuple> tuples = factory.select(
+				e.firstName
+				,e.lastName
+				,d.deptName
+				,de.fromDate
+				,de.toDate
+			).from(d).rightJoin(de).on(d.deptNo.eq(de.dept.deptNo))
+			.join(e).on(e.empNo.eq(de.emp.empNo)).where(de.emp.empNo.in(condition))
+			.orderBy(de.emp.empNo.asc()).orderBy(de.fromDate.asc()).fetch();
+		
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		Map<String, Object> map = null;		
+		for (Tuple tuple : tuples) {
+			map = new HashMap<String, Object>();
+			map.put("name", tuple.get(e.firstName)+", "+tuple.get(e.lastName));
+			map.put("team", tuple.get(d.deptName));
+			map.put("fromDate", tuple.get(de.fromDate));
+			map.put("toDate", tuple.get(de.toDate));
+			list.add(map);
+		}			
+		return list;
+	}
 	
 	
-	
-	// 위 내용을 join 활용해서도 풀어보자!
 		
 	// 현 팀장들의 이름, 성별, 입사일, 직책, 직책 기간
 		

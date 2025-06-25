@@ -26,4 +26,8 @@ public class ExampleService {
 		return repo.exam3();
 	}
 
+	public List<Map<String, Object>> exam4() {
+		return repo.exam4();
+	}
+
 }

@@ -35,8 +35,10 @@ public class ExampleController {
 	}
 		
 	// 위 내용을 join 활용해서도 풀어보자!
-	//@GetMapping("/exam/4")
-
+	@GetMapping("/exam/4")
+	public List<Map<String, Object>>exam4(){
+		return service.exam4();
+	}
 		
 	// 현 팀장들의 이름, 성별, 입사일, 직책, 직책 기간
 	//@GetMapping("/exam/5")
