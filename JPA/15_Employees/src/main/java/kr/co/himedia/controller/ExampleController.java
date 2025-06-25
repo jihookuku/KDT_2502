@@ -1,15 +1,25 @@
 package kr.co.himedia.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.himedia.service.ExampleService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 public class ExampleController {
 	
+	private final ExampleService service;
+	
 	// 사원들의 이름(성과 이름을 합쳐서)과 입사일, 직책을 입사일이 빠른 순으로 보여주시오
-	//@GetMapping("/exam/1")
+	@GetMapping("/exam/1")
+	public List<Map<String, Object>>exam1(){
+		return service.exam1();
+	}
 
 
 	//여러 팀에 배정된 사원의 이름을 가져 오시오
