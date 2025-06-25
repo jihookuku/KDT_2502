@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
-import org.hibernate.criterion.SubqueryExpression;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.Tuple;
@@ -22,8 +21,10 @@ import kr.co.himedia.entity.QDeptManager;
 import kr.co.himedia.entity.QEmployees;
 import kr.co.himedia.entity.QSalaries;
 import kr.co.himedia.entity.QTitles;
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
+@Slf4j
 public class ExampleRepo {
 	
 	private final JPAQueryFactory factory;
@@ -195,9 +196,42 @@ public class ExampleRepo {
 	}
 		
 		
-	// 사원들의 사번, 이름, 현재 직책과 급여
+	/* 사원들의 사번, 이름, 현재 직책과 급여
+	 select 
+		t.emp_no, 
+		t.title, 
+		(select s.salary from salaries s where s.to_date = '9999-01-01' and s.emp_no  = t.emp_no) as salary,
+		(select concat(e.first_name,' ',e.last_name) from employees e where e.emp_no = t.emp_no) as name
+	from titles t where t.to_date = '9999-01-01'
+	 */
+	public List<Map<String, Object>>exam6(){
+		
+		LocalDate target = LocalDate.of(9999, 1, 1);
 
+		SubQueryExpression<Integer> salary = JPAExpressions.select(s.salary).from(s)
+				.where(s.toDate.eq(target).and(s.emp.empNo.eq(t.emp.empNo)));
+		
+		SubQueryExpression<String> name = JPAExpressions.select(e.firstName.concat(", ").concat(e.lastName))
+				.from(e).where(e.empNo.eq(t.emp.empNo));
+		
+		List<Tuple> tuples = factory.select(t.emp.empNo,t.key.title,name, salary).from(t)
+				.where(t.toDate.eq(target)).fetch();
 
+				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();		
+		Map<String, Object> map = null;
+		for (Tuple tuple : tuples) {
+			map = new HashMap<String, Object>();
+			map.put("empNo", tuple.get(t.emp.empNo));
+			map.put("title", tuple.get(t.key.title));
+			map.put("name", tuple.get(name));
+			map.put("salary", tuple.get(salary));
+			list.add(map);		
+		}		
+		log.info("list size : "+list.size());
+		return list;
+	}
+	
+	
 }
 
 

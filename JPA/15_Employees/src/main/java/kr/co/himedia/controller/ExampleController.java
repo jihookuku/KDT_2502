@@ -47,6 +47,9 @@ public class ExampleController {
 	}
 		
 	// 사원들의 사번, 이름, 현재 직책과 급여
-	//@GetMapping("/exam/6")
+	@GetMapping("/exam/6")
+	public List<Map<String, Object>>exam6(){
+		return service.exam6();
+	}
 	
 }

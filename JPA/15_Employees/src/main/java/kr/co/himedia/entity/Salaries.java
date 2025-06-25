@@ -22,8 +22,7 @@ public class Salaries {
 	
 	@EmbeddedId
 	private SalaryKey key;
-	
-	
+		
 	private int salary;
 	
 	@Column(name="to_date")
