@@ -29,8 +29,10 @@ public class ExampleController {
 	}
 		
 	// 그럼 각 인원이 어떤 팀에서 어떤 팀으로 이동했는지 알아보자
-	//@GetMapping("/exam/3")
-
+	@GetMapping("/exam/3")
+	public List<Map<String, Object>> exam3(){
+		return service.exam3();
+	}
 		
 	// 위 내용을 join 활용해서도 풀어보자!
 	//@GetMapping("/exam/4")

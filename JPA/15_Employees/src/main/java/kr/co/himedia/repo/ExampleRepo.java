@@ -8,9 +8,12 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import org.hibernate.criterion.SubqueryExpression;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.SubQueryExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kr.co.himedia.entity.QDepartments;
@@ -78,8 +81,41 @@ public class ExampleRepo {
 	}
 	
 	
-	// 그럼 각 인원이 어떤 팀에서 어떤 팀으로 이동했는지 알아보자
+	/* 그럼 각 인원이 어떤 팀에서 어떤 팀으로 이동했는지 알아보자
+		select
+			(select concat(e.first_name, e.last_name) from employees e where e.emp_no = de.emp_no)  as name
+			,(select dept_name from departments d where d.dept_no = de.dept_no) as team
+			,de.from_date 
+			,de.to_date 
+		from dept_emp de where de.emp_no in (
+			select de.emp_no from dept_emp de group by emp_no having count(de.dept_no)>1)
+		order by de.emp_no, de.from_date asc;
+	*/	
+	public List<Map<String, Object>> exam3(){
 		
+		SubQueryExpression<String> name = JPAExpressions.select(e.firstName.concat(e.lastName)).from(e).where(e.empNo.eq(de.emp.empNo));		
+		SubQueryExpression<String> team = JPAExpressions.select(d.deptName).from(d).where(d.deptName.eq(de.dept.deptName));		
+		SubQueryExpression<Integer> condition = JPAExpressions.select(de.emp.empNo).from(de).groupBy(de.emp.empNo)
+				.having(de.dept.deptNo.count().gt(1));
+		
+		List<Tuple> tuples = factory.select(name,team,de.fromDate,de.toDate).from(de)
+			.where(de.emp.empNo.in(condition)).orderBy(de.emp.empNo.asc(),de.fromDate.asc()).fetch();		
+		
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		Map<String, Object> map = null;
+		for (Tuple tuple : tuples) {
+			map = new HashMap<String, Object>();
+			map.put("name", tuple.get(name));
+			map.put("team", tuple.get(team));
+			map.put("fromDate", tuple.get(de.fromDate));
+			map.put("toDate", tuple.get(de.toDate));
+			list.add(map);
+		}				
+		return list;
+	}
+	
+	
+	
 	// 위 내용을 join 활용해서도 풀어보자!
 		
 	// 현 팀장들의 이름, 성별, 입사일, 직책, 직책 기간
