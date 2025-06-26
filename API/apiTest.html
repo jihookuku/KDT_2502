@@ -12,7 +12,24 @@
 
         //http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
         const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst';
-        const key = '';
+        // 디코딩 된 키 넣을 것
+        const key = 'zMy14qMndDexq4lGZcV6Shk1n/m4eUz+HuaFIfJsWegGile/gbTdopa7s08fD5XvfVv4uInYIk74+aUm6xkwLA==';
+
+        // 카테고리 코드
+        const cate_code={
+            'T1H':'기온',
+            'RN1':'1시간강수량',
+            'UUU':'동서바람성분',
+            'VVV':'납북바람성분',
+            'REH':'습도',
+            'PTY':'강수형태',
+            'VEC':'풍향',
+            'WSD':'풍속',
+        };
+
+        //강수코드
+        // 초단기 : 없음(0),비(1),비/눈(2),눈(3),빗방울(5),빗방울눈날림(6),눈날림(7)
+        const pty_code = ['없음','비','비/눈','눈','','빗방울','빗방울눈날림','눈날림'];
 
         async function send(){
             let list = document.getElementById('list');
