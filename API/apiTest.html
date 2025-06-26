@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul id="list"></ul>
+<button onclick="send()">초단기 실황</button>
+</body>
+<script>
+
+        //http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
+        const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst';
+        const key = '';
+
+        async function send(){
+            let list = document.getElementById('list');
+
+            let params = {
+                serviceKey:key,
+                pageNo:1,
+                numOfRows:1000,
+                dataType:'JSON',
+                base_date:'20250626',
+                base_time:'0900',
+                nx:60,
+                ny:127
+            };
+
+            const queryStr = new URLSearchParams(params).toString();
+            console.log(queryStr);
+            const result = await fetch(`${url}?${queryStr}`);
+            const json = await result.json();
+            console.log(json);
+
+        }
+</script>
+</html>
