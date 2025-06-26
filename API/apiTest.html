@@ -20,7 +20,7 @@
             'T1H':'기온',
             'RN1':'1시간강수량',
             'UUU':'동서바람성분',
-            'VVV':'납북바람성분',
+            'VVV':'남북바람성분',
             'REH':'습도',
             'PTY':'강수형태',
             'VEC':'풍향',
@@ -40,7 +40,7 @@
                 numOfRows:1000,
                 dataType:'JSON',
                 base_date:'20250626',
-                base_time:'0900',
+                base_time:'1000',
                 nx:60,
                 ny:127
             };
@@ -51,6 +51,26 @@
             const json = await result.json();
             console.log(json);
 
+            const {response} = json;
+            const code = response.header.resultCode;
+
+            if(code == '00'){
+                let content = '';
+                content = '<ul>';
+                for(let data of response.body.items.item){
+                    let type = cate_code[data.category];
+                    let val = parseInt(data.obsrValue);
+                    if(type == '강수형태'){
+                        val = pty_code[val];
+                    }
+                    content += `<li>${type} : ${val}</li>`;
+                }
+                content +='</ul>';
+                console.log(content);
+                list.innerHTML = content;
+            }else{
+                alert(response.header.resultMsg);
+            }
         }
 </script>
 </html>
